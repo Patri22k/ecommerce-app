@@ -8,6 +8,9 @@ RUN npm install
 COPY prisma ./prisma
 COPY src ./src
 
-RUN npx prisma generate
+COPY entrypoint.sh ./
+RUN chmod +x entrypoint.sh
 
-CMD ["npm", "start"]
+EXPOSE 5000
+
+ENTRYPOINT ["./entrypoint.sh"]
