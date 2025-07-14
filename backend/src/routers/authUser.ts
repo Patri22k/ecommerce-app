@@ -3,17 +3,14 @@ import {PrismaClient} from '@prisma/client';
 import {generateJwtToken, hashPassword} from "../utils/securityUtils";
 import bcrypt from "bcrypt";
 import prismaErrorHandler from "../errors/prismaErrorHandler";
+import {loginUserValidator, registerUserValidator} from "../validators/userValidator";
 
 const router = Router();
 const prisma = new PrismaClient();
 
 router.post('/register', async (req, res, next) => {
   try {
-    const {name, email, password} = req.body;
-
-    if (!name || !email || !password) {
-      return res.status(400).json({message: 'All fields are required'});
-    }
+    const {name, email, password} = registerUserValidator.parse(req.body);
 
     const user = await prisma.user.create({
       data: {
@@ -34,19 +31,15 @@ router.post('/register', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
   try {
-    const {email, password} = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({message: 'Email and password are required'});
-    }
+    const {email, password} = loginUserValidator.parse(req.body);
 
     const user = await prisma.user.findUniqueOrThrow(
       {
         where: {email}
       });
 
+    // Compare the provided password with the stored hashed password
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
     if (!isPasswordValid) {
       return res.status(401).json({status: "fail", message: "Invalid email or password"});
     }

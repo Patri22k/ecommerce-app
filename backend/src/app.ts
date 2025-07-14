@@ -19,7 +19,7 @@ app.use('/api', authRouter);
 app.use((req, res, next) => {
   next({
     status: 404,
-    message: "Route not found",
+    message: `Cannot ${req.method} ${req.originalUrl}`,
   })
 })
 
