@@ -1,10 +1,13 @@
 import Image from "next/image";
 import { Search } from 'lucide-react';
 import Navbar from "@/components/common/Navbar";
+import Product from "@/components/common/Product";
+
+// TODO: Change border color to some effect (now it is too visible)
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col items-center justify-between w-full min-h-screen pb-2">
+    <div className="flex flex-col items-center justify-between w-full min-h-screen py-2">
       <header className="flex items-center justify-between w-full">
         <Image
           src="/logo/SmartHub-logo.png"
@@ -14,7 +17,42 @@ export default function HomePage() {
         />
         <Search className="mx-3" />
       </header>
-      <Navbar/>
+      <main className="flex flex-col flex-grow w-[80%] mx-auto py-4">
+        <h2 className="text-lg font-medium mb-4">The best products for you</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <Product
+            id={"1"}
+            name="Samsung Galaxy S25+"
+            description={"1"}
+            price={1749.99}
+            imageUrl={"/products/galaxyS6-blackSapphire.webp"}
+          />
+          <Product
+            id={"1"}
+            name="Samsung Galaxy S25+"
+            description={"1"}
+            price={1749.99}
+            imageUrl={"/products/galaxyS6-blackSapphire.webp"}
+          />
+          <Product
+            id={"1"}
+            name="Samsung Galaxy S25+"
+            description={"1"}
+            price={1749.99}
+            imageUrl={"/products/galaxyS6-blackSapphire.webp"}
+          />
+          <Product
+            id={"1"}
+            name="Samsung Galaxy S25+"
+            description={"1"}
+            price={1749.99}
+            imageUrl={"/products/galaxyS6-blackSapphire.webp"}
+          />
+        </div>
+      </main>
+      <footer className="w-full fixed bottom-0 left-0 bg-white z-10">
+        <Navbar/>
+      </footer>
     </div>
   );
 }
