@@ -1,0 +1,21 @@
+"use client";
+
+import NavbarLink from "@/components/common/NavbarLink";
+import {House, ShoppingCart, User} from "lucide-react";
+import {usePathname} from "next/navigation";
+
+export default function Navbar() {
+  const pathname = usePathname();
+
+  const isHomeActive = pathname === "/";
+  const isCartActive = pathname.startsWith("/cart");
+  const isProfileActive = pathname.startsWith("/profile");
+
+  return (
+    <div className="flex items-center justify-around w-full border-t pt-4">
+      <NavbarLink href="/" label="Home" icon={<House/>} isActive={isHomeActive} />
+      <NavbarLink href="/cart" label="Cart" icon={<ShoppingCart/>} isActive={isCartActive} />
+      <NavbarLink href="/profile" label="Profile" icon={<User/>} isActive={isProfileActive} />
+    </div>
+  );
+}
