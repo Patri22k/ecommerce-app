@@ -6,17 +6,18 @@ import Product from "@/components/common/Product";
 export default function HomePage() {
   return (
     <div className="flex flex-col items-center justify-between w-full min-h-screen py-2">
-      <header className="flex items-center justify-between w-full">
+      <header className="flex items-start justify-between w-full">
         <Image
           src="/logo/SmartHub-logo.png"
+          className={"ml-2"}
           alt="SmartHub Logo"
           width={100}
           height={100}
         />
-        <Search className="mx-3" />
+        <Search className="mx-3 mt-2 mr-4" />
       </header>
       <main className="flex flex-col flex-grow w-[90%] mx-auto pt-4 pb-12">
-        <h2 className="text-lg font-medium mb-4">The best products for you</h2>
+        <h2 className="text-xl font-semibold mb-4">The best products for you</h2>
         <div className="grid grid-cols-2 gap-3">
           <Product
             id={"1"}

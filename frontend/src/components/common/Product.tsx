@@ -26,7 +26,7 @@ export default function Product(props: ProductProps) {
         <span className={"w-[90%] mx-auto"}>{name}</span>
         <span className={"text-base font-bold w-[90%] mx-auto text-red-600"}>{price} €</span>
       </div>
-      <button className={"flex items-center justify-center gap-x-2 text-green-600 " +
+      <button className={"flex items-center justify-center gap-x-2 text-emerald-500 " +
         "border-t border-t-black/20 w-full py-2 font-semibold"}>
         <ShoppingCart className={"w-5 h-5"}/>
         <span className={"text-xs"}>To Cart</span>

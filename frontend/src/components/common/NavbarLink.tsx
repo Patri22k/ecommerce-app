@@ -14,7 +14,7 @@ export default function NavbarLink(props: NavbarLinkProps) {
   return (
     <Link
       href={href}
-      className={`flex items-center justify-center text-xs ${isActive ? "text-blue-500" : "text-black"}`}
+      className={`flex items-center justify-center text-xs ${isActive ? "text-cyan-600" : "text-black"}`}
     >
       {icon && <span className="mx-2">{icon}</span> }
       <span>{label}</span>
