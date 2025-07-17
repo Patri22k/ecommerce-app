@@ -1,13 +1,22 @@
 import Navbar from "@/components/common/Navbar";
 import LogInButton from "@/components/ui/LogInButton";
+import Main from "@/components/common/Main";
+import Footer from "@/components/common/Footer";
+import Header from "@/components/common/Header";
+import SmartHubLogo from "@/components/ui/SmartHubLogo";
 
 export default function ProfilePage() {
   return (
-    <div>
-      <main>
+    <>
+      <Header>
+        <SmartHubLogo/>
+      </Header>
+      <Main>
         <LogInButton />
-      </main>
-      <Navbar/>
-    </div>
+      </Main>
+      <Footer>
+        <Navbar/>
+      </Footer>
+    </>
   );
 }

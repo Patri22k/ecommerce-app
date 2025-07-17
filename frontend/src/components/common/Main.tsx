@@ -4,11 +4,10 @@ interface MainProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLEle
   children?: React.ReactNode;
 }
 
-export default function Main(props: MainProps) {
+export default function Main({ children, className = "", ...rest }: MainProps) {
   return (
-    <main className={`flex flex-col flex-grow w-[90%] mx-auto pt-4 pb-12`
-    + `${props.className}`} {...props}>
-      {props.children}
+    <main className={`flex flex-col flex-grow w-[90%] mx-auto pt-4 pb-12 ${className}`} {...rest}>
+      {children}
     </main>
   );
 }
