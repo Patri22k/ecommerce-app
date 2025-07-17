@@ -18,12 +18,13 @@ export default function Product(props: ProductProps) {
       <div className={"flex flex-col justify-center items-center text-left gap-y-2 pb-1"}>
         <Image
           src={imageUrl}
-          className={"w-full py-2"}
+          className="w-full h-auto py-2"
           alt="Product Image"
-          width={100}
-          height={100}
+          width="0"
+          height="0"
+          sizes="100vw"
         />
-        <span className={"w-[90%] mx-auto"}>{name}</span>
+        <span className={"w-[90%] mx-auto text-cyan-800"}>{name}</span>
         <span className={"text-base font-bold w-[90%] mx-auto text-red-600"}>{price} €</span>
       </div>
       <button className={"flex items-center justify-center gap-x-2 text-emerald-500 " +

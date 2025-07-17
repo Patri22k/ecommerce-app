@@ -22,7 +22,7 @@ router.post('/register', async (req, res, next) => {
 
     const token = generateJwtToken(user.id);
 
-    return res.status(201).json({status: "success", token: token, message: "User created."});
+    return res.status(201).json({status: "success", token: token, message: "User created"});
 
   } catch (error) {
     prismaErrorHandler(error, next);
