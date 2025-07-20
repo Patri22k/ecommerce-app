@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import { authRouter } from './routers/authUser';
 import globalErrorHandler from "./errors/globalErrorHandler";
+import {authRouter} from './routers/authRouter';
+import {productRouter} from "./routers/productRouter";
 
 const app = express();
 
@@ -13,7 +14,8 @@ app.use(cors({
 }));
 
 // Defined routes
-app.use('/api', authRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/product', productRouter);
 
 // Catch-all for all undefined routes
 app.use((req, res, next) => {
