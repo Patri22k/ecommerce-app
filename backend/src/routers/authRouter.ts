@@ -20,10 +20,19 @@ router.post('/register', async (req, res, next) => {
       }
     });
 
-    const token = generateJwtToken(user.id);
+    const token = generateJwtToken(user.id, user.role);
 
-    return res.status(201).json({status: "success", token: token, message: "User created"});
-
+    return res.status(201).json({
+      status: "success",
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      },
+      message: "Login successful"
+    });
   } catch (error) {
     prismaErrorHandler(error, next);
   }
@@ -44,9 +53,19 @@ router.post('/login', async (req, res, next) => {
       return res.status(401).json({status: "fail", message: "Invalid email or password"});
     }
 
-    const token = generateJwtToken(user.id);
+    const token = generateJwtToken(user.id, user.role);
 
-    return res.status(200).json({status: "success", token: token, message: "Login successful"})
+    return res.status(200).json({
+      status: "success",
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      },
+      message: "Login successful"
+    });
   } catch (error) {
     prismaErrorHandler(error, next);
   }
