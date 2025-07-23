@@ -1,5 +1,5 @@
 import Navbar from "@/components/common/Navbar";
-import LogInButton from "@/components/ui/LogInButton";
+import LogInButton from "@/components/common/button/LogInButton";
 import Main from "@/components/common/Main";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
