@@ -1,14 +1,43 @@
 import { PrismaClient } from "@prisma/client";
 import {Router} from "express";
 import prismaErrorHandler from "../errors/prismaErrorHandler";
+import {authorizeRole} from "../middleware/authorizeRole";
+import {authUserToken} from "../middleware/authUserToken";
+import slugify from "slugify";
 
 const router = Router();
 const prisma = new PrismaClient();
 
-// TODO: Create a product with a slug
-// e.g. /product/samsung-galaxy-s6-plus-d12979378
-router.post('', async(req, res) => {
-  const { name, description, price, imageUrl } = req.body;
+router.use(authUserToken);
+
+router.post('',
+  authorizeRole("ADMIN"),
+  async(req, res, next) => {
+  const { id, title, description, category, imageUrl, price  } = req.body;
+
+  // TODO: add category
+
+  const slug = slugify(title, { // e.g. /product/samsung-galaxy-s6-plus-d12979378
+    lower: true,
+    strict: true
+  });
+
+  try {
+    const product = await prisma.product.create({
+      data: {
+        id,
+        title,
+        slug,
+        description,
+        imageUrl,
+        price: parseFloat(price)
+      }
+    })
+
+    return res.status(201).json({ status: "success", data: product });
+  } catch (error) {
+    prismaErrorHandler(error, next);
+  }
 })
 
 
