@@ -17,7 +17,7 @@ async function main() {
   });
 
   if (existingAdmin) {
-    throw new Error("An admin with credentials " + adminEmail + " already exists.");
+    console.log("An admin with credentials " + adminEmail + " already exists.");
   }
 
   const hashedPassword = await bcrypt.hash(adminPassword, 10);

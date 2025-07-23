@@ -15,9 +15,7 @@ router.post('',
   async(req, res, next) => {
   const { id, title, description, category, imageUrl, price  } = req.body;
 
-  // TODO: add category
-
-  const slug = slugify(title, { // e.g. /product/samsung-galaxy-s6-plus-d12979378
+  const slug = slugify(title, { // e.g. "samsung-galaxy-s6"
     lower: true,
     strict: true
   });
@@ -29,38 +27,13 @@ router.post('',
         title,
         slug,
         description,
+        category,
         imageUrl,
         price: parseFloat(price)
       }
     })
 
     return res.status(201).json({ status: "success", data: product });
-  } catch (error) {
-    prismaErrorHandler(error, next);
-  }
-})
-
-
-router.get('/:slugAndId', async (req, res, next) => {
-  const slugAndId = req.params.slugAndId;
-  const idMatch = slugAndId.match(/(-d(\d+))$/);
-
-  if (!idMatch) {
-    return res.status(400).json({ status: "fail", message: "Invalid product URL" });
-  }
-
-  const id = parseInt(idMatch[2], 10);
-
-  try {
-    const product = await prisma.product.findUnique({
-      where: {id}
-    })
-
-    if (!product) {
-      return res.status(404).json({ status: "fail", message: "Product not found" });
-    }
-
-    return res.status(200).json({ status: "success", data: product });
   } catch (error) {
     prismaErrorHandler(error, next);
   }

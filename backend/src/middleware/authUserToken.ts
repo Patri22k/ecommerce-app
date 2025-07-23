@@ -8,7 +8,7 @@ export interface AuthenticatedRequest extends Request {
   };
 }
 
-const JWT_SECRET = process.env.JWT_TOKEN!;
+const JWT_TOKEN = process.env.JWT_TOKEN!;
 
 export const authUserToken = (
   req: AuthenticatedRequest,
@@ -18,6 +18,7 @@ export const authUserToken = (
   const authHeader = req.headers['authorization'];
 
   console.log("Auth Header:", authHeader);
+  console.log("JWT_TOKEN:", JWT_TOKEN);
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({
@@ -28,7 +29,8 @@ export const authUserToken = (
 
   const token = authHeader.split(" ")[1];
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: string, role: string };
+    const decoded = jwt.verify(token, JWT_TOKEN) as { id: string, role: string };
+    console.log("Decoded JWT:", decoded);
 
     req.user = {
       id: decoded.id,

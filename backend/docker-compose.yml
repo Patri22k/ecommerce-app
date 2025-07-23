@@ -15,10 +15,8 @@ services:
   backend:
     build: .
     container_name: backend
-    environment:
-      DATABASE_URL: postgres://user:password@postgres:5432/postgres
-      INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL}
-      INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD}
+    env_file:
+      - .env
     ports:
       - "5000:5000"
     depends_on:
