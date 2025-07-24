@@ -17,6 +17,9 @@ services:
     container_name: backend
     env_file:
       - .env
+    environment:
+      INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL}
+      INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD}
     ports:
       - "5000:5000"
     depends_on:
