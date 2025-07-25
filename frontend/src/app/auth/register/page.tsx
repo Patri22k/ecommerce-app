@@ -31,7 +31,7 @@ export default function RegisterPage() {
     if (fieldErrors.general) {
       const timeout = setTimeout(() => {
         setFieldErrors({});
-      });
+      }, 5000);
 
       return () => clearTimeout(timeout);
     }
@@ -78,6 +78,10 @@ export default function RegisterPage() {
           setFieldErrors({
             general: err.response?.data?.message || "An error occurred during registration."
           });
+        } else {
+          setFieldErrors({
+            general: "An unexpected error occurred. Please try again later."
+          });
         }
       } else {
         setFieldErrors({
@@ -123,7 +127,7 @@ export default function RegisterPage() {
                 error={fieldErrors.password}
               />
               <SubmitButton
-                className={fieldErrors.general ? "!bg-red-700 !hover:bg-red-700" : ""}
+                className={fieldErrors.general ? "bg-red-700 hover:bg-red-700" : "hover:bg-gray-300"}
                 label={fieldErrors.general ? (
                   <span className={"text-emerald-50 py-2"}>
                 {fieldErrors.general}

@@ -77,6 +77,10 @@ export default function LoginPage() {
           setFieldErrors({
             general: err.response?.data?.message || "An error occurred during login."
           });
+        } else {
+          setFieldErrors({
+            general: "An error occurred during login. Please try again later."
+          });
         }
       } else {
         setFieldErrors({
@@ -118,7 +122,7 @@ export default function LoginPage() {
                 />
               </div>
               <SubmitButton
-                className={fieldErrors.general ? "bg-red-700 !hover:bg-red-700" : ""}
+                className={fieldErrors.general ? "bg-red-700 hover:bg-red-700" : "hover:bg-gray-300"}
                 label={fieldErrors.general ? (
                   <span className={"text-emerald-50 py-2"}>
                 {fieldErrors.general}
