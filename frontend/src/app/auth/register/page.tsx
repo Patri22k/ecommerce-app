@@ -7,17 +7,20 @@ import {LoaderCircle} from "lucide-react";
 import Header from "@/components/common/Header";
 import Main from "@/components/common/Main";
 import SmartHubLogo from "@/components/ui/SmartHubLogo";
-import SubmitButton from "@/components/common/button/SubmitButton";
-import PasswordInput from "@/components/common/input/PasswordInput";
+import NameInput from "@/components/common/input/NameInput";
 import EmailInput from "@/components/common/input/EmailInput";
+import PasswordInput from "@/components/common/input/PasswordInput";
+import SubmitButton from "@/components/common/button/SubmitButton";
 import RedirectLink from "@/components/common/link/RedirectLink";
 
-export default function LoginPage() {
+export default function RegisterPage() {
+  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [fieldErrors, setFieldErrors] = useState<{
     general?: string;
+    name?: string;
     email?: string;
     password?: string;
   }>({});
@@ -28,12 +31,11 @@ export default function LoginPage() {
     if (fieldErrors.general) {
       const timeout = setTimeout(() => {
         setFieldErrors({});
-      }, 5000);
+      });
 
       return () => clearTimeout(timeout);
     }
   }, [fieldErrors.general]);
-
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,7 +43,8 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("http://localhost:5000/api/auth/register", {
+        name,
         email,
         password
       });
@@ -50,21 +53,19 @@ export default function LoginPage() {
         localStorage.setItem("token", response.data.token);
         router.push("/profile");
       } else {
-        // Handle unexpected response
         setFieldErrors({
-          general: "Login failed. Please try again."
+          general: "Registration failed. Please try again."
         });
       }
-
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const errorMessage = err.response?.data?.message;
 
-        if (errorMessage instanceof Object || typeof errorMessage === "object") {
-          const newErrors: { general?: string; email?: string; password?: string } = {};
+        if (typeof errorMessage === "object") {
+          const newErrors: { general?: string; name?: string; email?: string; password?: string } = {};
 
           for (const issue of errorMessage) {
-            const field = issue.path?.[0] as "email" | "password";
+            const field = issue.path?.[0] as "name" | "email" | "password";
 
             // Prioritize "required" (e.g., too_small) over format/length errors
             if (!newErrors[field]) {
@@ -73,9 +74,9 @@ export default function LoginPage() {
           }
 
           setFieldErrors(newErrors);
-        } else if (errorMessage instanceof String || typeof errorMessage === "string") {
+        } else if (typeof errorMessage === "string") {
           setFieldErrors({
-            general: err.response?.data?.message || "An error occurred during login."
+            general: err.response?.data?.message || "An error occurred during registration."
           });
         }
       } else {
@@ -86,39 +87,43 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <>
-      <Header className={"flex items-center justify-center"}>
+      <Header>
         <SmartHubLogo/>
       </Header>
-      <Main>
+      <Main className={"overflow-y-hidden"}>
         <div className={"bg-white py-6"}>
           <div className={"w-[90%] mx-auto"}>
             <form
-              id={"login-form"}
+              id={"register-form"}
               onSubmit={handleSubmit}
               className={"flex flex-col items-center justify-center w-full pb-8 bg-white"}
             >
-              <h1 className="text-2xl font-bold mb-4">Login</h1>
-              <div className={"inputs flex flex-col items-center justify-center w-full"}>
-                <EmailInput
-                  id={"email-input"}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  error={fieldErrors.email}
-                />
-                <PasswordInput
-                  id={"password-input"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  visibleIcon={true}
-                  error={fieldErrors.password}
-                />
-              </div>
+              <h1 className="text-2xl font-bold mb-4">Register a new account</h1>
+              <NameInput
+                id={"name-input"}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                error={fieldErrors.name}
+              />
+              <EmailInput
+                id={"email-input"}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={fieldErrors.email}
+              />
+              <PasswordInput
+                id={"password-input"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                visibleIcon={true}
+                error={fieldErrors.password}
+              />
               <SubmitButton
-                className={fieldErrors.general ? "bg-red-700 !hover:bg-red-700" : ""}
+                className={fieldErrors.general ? "!bg-red-700 !hover:bg-red-700" : ""}
                 label={fieldErrors.general ? (
                   <span className={"text-emerald-50 py-2"}>
                 {fieldErrors.general}
@@ -129,14 +134,15 @@ export default function LoginPage() {
                 </span>
                 ) : (
                   <span>
-                    Login
-                  </span>
-                )}
+                  Register
+                </span>
+                )
+                }
               />
             </form>
             <RedirectLink
-              href={"/auth/register"}
-              label={"Register new account"}
+              href={"/auth/login"}
+              label={"Already have an account? Login"}
               className={"!bg-transparent font-bold text-indigo-600 border rounded"}
             />
           </div>

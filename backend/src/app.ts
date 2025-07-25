@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import zodErrorHandler from "./errors/zodErrorHandler";
 import globalErrorHandler from "./errors/globalErrorHandler";
 import {authRouter} from './routers/authRouter';
 import {productRouter} from "./routers/productRouter";
@@ -16,6 +17,9 @@ app.use(cors({
 // Defined routes
 app.use('/api/auth', authRouter);
 app.use('/api/product', productRouter);
+
+// Zod error handler
+app.use(zodErrorHandler);
 
 // Catch-all for all undefined routes
 app.use((req, res, next) => {

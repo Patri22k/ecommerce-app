@@ -2,6 +2,7 @@ node_modules
 npm-debug.log
 Dockerfile
 .dockerignore
+backend/docker-compose.yml
 .git
 .next
 dist

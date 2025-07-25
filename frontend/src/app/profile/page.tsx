@@ -1,5 +1,5 @@
 import Navbar from "@/components/common/Navbar";
-import LogInButton from "@/components/common/button/LogInButton";
+import RedirectLink from "@/components/common/link/RedirectLink";
 import Main from "@/components/common/Main";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
@@ -11,8 +11,8 @@ export default function ProfilePage() {
       <Header>
         <SmartHubLogo/>
       </Header>
-      <Main>
-        <LogInButton />
+      <Main className={"!w-[90%] !mx-auto pt-4"}>
+        <RedirectLink href={"/auth/login"} />
       </Main>
       <Footer>
         <Navbar/>

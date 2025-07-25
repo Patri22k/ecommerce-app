@@ -13,7 +13,7 @@ export default function HomePage() {
         <SmartHubLogo/>
         <Search className="mx-3 mt-2 mr-4" />
       </Header>
-      <Main>
+      <Main className={"!w-[90%] !mx-auto"}>
         <h2 className="text-xl font-semibold mb-4">The best products for you</h2>
         <div className="grid grid-cols-2 gap-3">
           <Product

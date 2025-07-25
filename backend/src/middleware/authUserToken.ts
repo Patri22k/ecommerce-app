@@ -17,9 +17,6 @@ export const authUserToken = (
 ) => {
   const authHeader = req.headers['authorization'];
 
-  console.log("Auth Header:", authHeader);
-  console.log("JWT_TOKEN:", JWT_TOKEN);
-
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({
       status: "fail",
@@ -30,7 +27,6 @@ export const authUserToken = (
   const token = authHeader.split(" ")[1];
   try {
     const decoded = jwt.verify(token, JWT_TOKEN) as { id: string, role: string };
-    console.log("Decoded JWT:", decoded);
 
     req.user = {
       id: decoded.id,

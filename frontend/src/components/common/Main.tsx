@@ -6,7 +6,7 @@ interface MainProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLEle
 
 export default function Main({ children, className = "", ...rest }: MainProps) {
   return (
-    <main className={`flex flex-col flex-grow w-[90%] mx-auto pt-4 pb-12 ${className}`} {...rest}>
+    <main className={`flex flex-col flex-grow w-full pb-6 ${className}`} {...rest}>
       {children}
     </main>
   );

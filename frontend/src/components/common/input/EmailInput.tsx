@@ -4,26 +4,42 @@ interface EmailInputProps extends React.DetailedHTMLProps<React.InputHTMLAttribu
   id: string;
   className?: string;
   label?: string;
+  placeholder?: string;
+  error?: string;
 }
 
-export default function EmailInput({className="", label="Email", id, ...next}: EmailInputProps) {
+export default function EmailInput({
+  id,
+  className="",
+  label="Email",
+  placeholder="jozko@mrkvicka.sk",
+  error="",
+  ...next
+}: EmailInputProps) {
   return (
-    <>
-      <label
-        htmlFor={id}
+    <div className={"relative w-full py-2"}>
+      <span
         className="w-full block mb-1 font-medium text-gray-700"
       >
         {label}
-      </label>
+      </span>
       <input
         id={id}
-        className={`bg-gray-100 w-full border rounded pl-2 py-2 mb-8 focus:outline-none focus:ring-2 
-        focus:ring-blue-500 focus:border-none ${className}`}
+        className={`bg-gray-100 w-full border rounded p-2 mb-8 focus:outline-none
+        focus:border-blue-500 focus:border
+         ${error ? "border-red-500" : ""}
+         ${className}`}
         type={"email"}
-        placeholder={"jozko@mrkvicka.sk"}
+        placeholder={placeholder}
         {...next}
       >
       </input>
-    </>
+
+      {error && (
+        <span className={"absolute left-2 bottom-3 text-red-500 text-sm"}>
+          {error}
+        </span>
+      )}
+    </div>
   )
 }
