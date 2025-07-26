@@ -4,6 +4,7 @@ import zodErrorHandler from "./errors/zodErrorHandler";
 import globalErrorHandler from "./errors/globalErrorHandler";
 import {authRouter} from './routers/authRouter';
 import {productRouter} from "./routers/productRouter";
+import prismaErrorHandler from "./errors/prismaErrorHandler";
 
 const app = express();
 
@@ -18,8 +19,8 @@ app.use(cors({
 app.use('/api/auth', authRouter);
 app.use('/api/product', productRouter);
 
-// Zod error handler
-app.use(zodErrorHandler);
+app.use(zodErrorHandler); // Zod error handler
+app.use(prismaErrorHandler); // Prisma error handler
 
 // Catch-all for all undefined routes
 app.use((req, res, next) => {
@@ -27,9 +28,8 @@ app.use((req, res, next) => {
     status: 404,
     message: `Cannot ${req.method} ${req.originalUrl}`,
   })
-})
+});
 
-// Global error handler
-app.use(globalErrorHandler);
+app.use(globalErrorHandler); // Global error handler
 
 export default app;

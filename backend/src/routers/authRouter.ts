@@ -2,7 +2,6 @@ import {Router} from 'express';
 import {PrismaClient} from '@prisma/client';
 import {generateJwtToken, hashPassword} from "../utils/securityUtils";
 import bcrypt from "bcrypt";
-import prismaErrorHandler from "../errors/prismaErrorHandler";
 import {loginUserValidator, registerUserValidator} from "../validators/userValidator";
 
 const router = Router();
@@ -34,7 +33,7 @@ router.post('/register', async (req, res, next) => {
       message: "Login successful"
     });
   } catch (error) {
-    prismaErrorHandler(error, next);
+    next(error);
   }
 })
 
@@ -67,7 +66,7 @@ router.post('/login', async (req, res, next) => {
       message: "Login successful"
     });
   } catch (error) {
-    prismaErrorHandler(error, next);
+    next(error);
   }
 })
 

@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import {Router} from "express";
-import prismaErrorHandler from "../errors/prismaErrorHandler";
 import {authorizeRole} from "../middleware/authorizeRole";
 import {authUserToken} from "../middleware/authUserToken";
 import slugify from "slugify";
@@ -35,7 +34,7 @@ router.post('',
 
     return res.status(201).json({ status: "success", data: product });
   } catch (error) {
-    prismaErrorHandler(error, next);
+    next(error);
   }
 })
 

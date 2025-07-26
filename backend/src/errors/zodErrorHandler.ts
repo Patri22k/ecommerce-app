@@ -1,13 +1,11 @@
 import {Response, Request, NextFunction} from "express";
 const zodErrorHandler = (
-  error: unknown,
+  error: any,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   if (isZodError(error)) {
-    console.log("DEBUG: Zod Error Handler Triggered");
-
     return res.status(400).json({
       status: "fail",
       message: JSON.parse(error.message)
@@ -15,7 +13,7 @@ const zodErrorHandler = (
   }
 
   // Unknown or other error
-  next();
+  next(error);
 }
 
 import {ZodError} from "zod";

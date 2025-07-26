@@ -11,6 +11,7 @@ import SubmitButton from "@/components/common/button/SubmitButton";
 import PasswordInput from "@/components/common/input/PasswordInput";
 import EmailInput from "@/components/common/input/EmailInput";
 import RedirectLink from "@/components/common/link/RedirectLink";
+import {jwtDecode} from "jwt-decode";
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
@@ -47,8 +48,16 @@ export default function LoginPage() {
       });
 
       if (response.data?.status === "success") {
-        localStorage.setItem("token", response.data.token);
-        router.push("/profile");
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+
+        const decodedToken = jwtDecode<{ id: string; role: "USER" | "ADMIN" }>(token);
+
+        if (decodedToken.role === "ADMIN") {
+          router.push("/admin");
+        } else {
+          router.push("/profile");
+        }
       } else {
         // Handle unexpected response
         setFieldErrors({
