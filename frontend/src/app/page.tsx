@@ -1,10 +1,10 @@
 import { Search } from 'lucide-react';
 import Navbar from "@/components/common/Navbar";
 import Product from "@/components/common/Product";
-import Main from "@/components/common/Main";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import SmartHubLogo from "@/components/ui/SmartHubLogo";
+import MainBase from "@/components/common/Main";
 
 export default function HomePage() {
   return (
@@ -13,7 +13,7 @@ export default function HomePage() {
         <SmartHubLogo/>
         <Search className="mx-3 mt-2 mr-4" />
       </Header>
-      <Main className={"!w-[90%] !mx-auto"}>
+      <MainBase>
         <h2 className="text-xl font-semibold mb-4">The best products for you</h2>
         <div className="grid grid-cols-2 gap-3">
           <Product
@@ -45,7 +45,7 @@ export default function HomePage() {
             imageUrl={"/products/galaxyS6-blackSapphire.webp"}
           />
         </div>
-      </Main>
+      </MainBase>
       <Footer>
         <Navbar/>
       </Footer>

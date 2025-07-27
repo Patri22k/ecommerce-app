@@ -2,11 +2,11 @@
 
 import Navbar from "@/components/common/Navbar";
 import RedirectLink from "@/components/common/link/RedirectLink";
-import Main from "@/components/common/Main";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 import SmartHubLogo from "@/components/ui/SmartHubLogo";
 import {useEffect, useState} from "react";
+import MainBase from "@/components/common/Main";
 
 export default function ProfilePage() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -25,7 +25,7 @@ export default function ProfilePage() {
       <Header>
         <SmartHubLogo/>
       </Header>
-      <Main className={"!w-[90%] !mx-auto pt-4"}>
+      <MainBase>
         {loggedIn ? (
           <RedirectLink href={"/auth/login"} />
         ) : (
@@ -33,7 +33,7 @@ export default function ProfilePage() {
             {/* TODO: Implement profile info like name, email, etc. */}
           </div>
         )}
-      </Main>
+      </MainBase>
       <Footer>
         <Navbar/>
       </Footer>
