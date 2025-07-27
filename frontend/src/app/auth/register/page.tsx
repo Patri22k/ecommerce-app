@@ -6,12 +6,13 @@ import React, {FormEvent, useEffect, useState} from "react";
 import {LoaderCircle} from "lucide-react";
 import Header from "@/components/common/Header";
 import SmartHubLogo from "@/components/ui/SmartHubLogo";
-import NameInput from "@/components/common/input/NameInput";
+import TextInput from "@/components/common/input/TextInput";
 import EmailInput from "@/components/common/input/EmailInput";
 import PasswordInput from "@/components/common/input/PasswordInput";
 import SubmitButton from "@/components/common/button/SubmitButton";
 import RedirectLink from "@/components/common/link/RedirectLink";
 import MainBase from "@/components/common/Main";
+import Heading1 from "@/components/ui/Heading1";
 
 export default function RegisterPage() {
   const [name, setName] = useState<string>("");
@@ -104,8 +105,8 @@ export default function RegisterPage() {
           onSubmit={handleSubmit}
           className={"flex flex-col items-center justify-center w-full pb-8 bg-white"}
         >
-          <h1 className="text-2xl font-bold mb-4">Register a new account</h1>
-          <NameInput
+          <Heading1>Register a new account</Heading1>
+          <TextInput
             id={"name-input"}
             value={name}
             onChange={(e) => setName(e.target.value)}

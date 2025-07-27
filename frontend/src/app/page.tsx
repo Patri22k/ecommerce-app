@@ -5,6 +5,7 @@ import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import SmartHubLogo from "@/components/ui/SmartHubLogo";
 import MainBase from "@/components/common/Main";
+import Heading2 from "@/components/ui/Heading2";
 
 export default function HomePage() {
   return (
@@ -14,7 +15,7 @@ export default function HomePage() {
         <Search className="mx-3 mt-2 mr-4" />
       </Header>
       <MainBase>
-        <h2 className="text-xl font-semibold mb-4">The best products for you</h2>
+        <Heading2>The best products for you</Heading2>
         <div className="grid grid-cols-2 gap-3">
           <Product
             id={"1"}

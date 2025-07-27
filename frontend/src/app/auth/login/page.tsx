@@ -12,6 +12,7 @@ import EmailInput from "@/components/common/input/EmailInput";
 import RedirectLink from "@/components/common/link/RedirectLink";
 import {jwtDecode} from "jwt-decode";
 import MainBase from "@/components/common/Main";
+import Heading1 from "@/components/ui/Heading1";
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
@@ -112,7 +113,7 @@ export default function LoginPage() {
           onSubmit={handleSubmit}
           className={"flex flex-col items-center justify-center w-full pb-8 bg-white"}
         >
-          <h1 className="text-2xl font-bold mb-4">Login</h1>
+          <Heading1>Login</Heading1>
           <div className={"inputs flex flex-col items-center justify-center w-full"}>
             <EmailInput
               id={"email-input"}

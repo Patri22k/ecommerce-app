@@ -1,6 +1,6 @@
 import React from "react";
 
-interface NameInputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface TextInputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   id: string;
   className?: string;
   label?: string;
@@ -8,14 +8,14 @@ interface NameInputProps extends React.DetailedHTMLProps<React.InputHTMLAttribut
   error?: string;
 }
 
-export default function NameInput({
+export default function TextInput({
   id,
   className = "",
-  label = "Name",
-  placeholder="Jožko Mrkvička",
+  label = "Label Text",
+  placeholder="Placeholder Text",
   error = "",
   ...next
-  } : NameInputProps) {
+  } : TextInputProps) {
   return (
     <div className={"relative w-full py-2"}>
       <span
