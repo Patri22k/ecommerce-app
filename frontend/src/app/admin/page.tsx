@@ -97,7 +97,7 @@ export default function AdminPage() {
           <ArrayInput
             id={"categories-input"}
             value={categories}
-            onChange={setCategories}
+            customOnChange={setCategories}
             error={fieldErrors.categories}
             label={"Categories"}
             placeholder={"Smartphones, Electronics, Gadgets"}

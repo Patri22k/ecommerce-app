@@ -2,10 +2,10 @@
 
 import React, {useState} from "react";
 
-interface ArrayInputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface ArrayInputProps extends Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value" | "onChange"> {
   id: string;
   value: string[];
-  onChange: (updated: string[]) => void;
+  customOnChange: (updated: string[]) => void;
   label?: string;
   className?: string;
   placeholder?: string;
@@ -15,7 +15,7 @@ interface ArrayInputProps extends React.DetailedHTMLProps<React.InputHTMLAttribu
 export default function ArrayInput({
   id,
   value,
-  onChange,
+  customOnChange,
   label = "Array Input",
   className = "",
   placeholder: placeholder = "Enter category and either press Enter or type a comma",
@@ -27,7 +27,7 @@ export default function ArrayInput({
   const handleAddCategory = () => {
     const trimmedCategory = categoryInput.trim();
     if (trimmedCategory && !value.includes(trimmedCategory)) {
-      onChange([...value, trimmedCategory]);
+      customOnChange([...value, trimmedCategory]);
     }
 
     setCategoryInput("");
@@ -42,7 +42,7 @@ export default function ArrayInput({
 
   const handleRemoveCategory = (index: number) => {
     const updatedCategories = value.filter((_, i) => i !== index);
-    onChange(updatedCategories);
+    customOnChange(updatedCategories);
   }
 
   return (
