@@ -70,7 +70,7 @@ export default function LoginPage() {
       if (axios.isAxiosError(err)) {
         const errorMessage = err.response?.data?.message;
 
-        if (errorMessage instanceof Object || typeof errorMessage === "object") {
+        if (typeof errorMessage === "object") {
           const newErrors: { general?: string; email?: string; password?: string } = {};
 
           for (const issue of errorMessage) {
@@ -83,9 +83,9 @@ export default function LoginPage() {
           }
 
           setFieldErrors(newErrors);
-        } else if (errorMessage instanceof String || typeof errorMessage === "string") {
+        } else if (typeof errorMessage === "string") {
           setFieldErrors({
-            general: err.response?.data?.message || "An error occurred during login."
+            general: errorMessage
           });
         } else {
           setFieldErrors({

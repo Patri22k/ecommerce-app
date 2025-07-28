@@ -12,7 +12,7 @@ router.use(authUserToken);
 router.post('',
   authorizeRole("ADMIN"),
   async(req, res, next) => {
-  const { id, title, description, category, imageUrl, price  } = req.body;
+  const { title, description, category, imageUrl, price  } = req.body;
 
   const slug = slugify(title, { // e.g. "samsung-galaxy-s6"
     lower: true,
@@ -22,7 +22,6 @@ router.post('',
   try {
     const product = await prisma.product.create({
       data: {
-        id,
         title,
         slug,
         description,

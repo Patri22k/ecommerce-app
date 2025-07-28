@@ -77,7 +77,7 @@ export default function RegisterPage() {
           setFieldErrors(newErrors);
         } else if (typeof errorMessage === "string") {
           setFieldErrors({
-            general: err.response?.data?.message || "An error occurred during registration."
+            general: errorMessage
           });
         } else {
           setFieldErrors({
