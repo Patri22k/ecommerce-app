@@ -1,6 +1,7 @@
 # Fullstack Ecommerce Application
 
 ## Status
+
 This project is currently in development. If you want to test it, please add `.env` file to `backend/` directory
 with the following content:
 ```dotenv

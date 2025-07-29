@@ -10,5 +10,5 @@ export const generateJwtToken = (userId: string, role: string) => {
 }
 
 export const hashPassword = async (password: string) => {
-  return await bcrypt.hash(password, 10);
+  return bcrypt.hash(password, 10);
 }
