@@ -10,9 +10,11 @@ import SubmitButton from "@/components/common/button/SubmitButton";
 import PasswordInput from "@/components/common/input/PasswordInput";
 import EmailInput from "@/components/common/input/EmailInput";
 import RedirectLink from "@/components/common/link/RedirectLink";
-import {jwtDecode} from "jwt-decode";
 import MainBase from "@/components/common/Main";
 import Heading1 from "@/components/ui/Heading1";
+import handleLoginUser from "@/lib/auth/login";
+import handleGetUser from "@/lib/me";
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
@@ -43,18 +45,16 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
-        email,
-        password
-      });
+      const response = await handleLoginUser(email, password);
 
       if (response.data?.status === "success") {
         const token = response.data.token;
         localStorage.setItem("token", token);
 
-        const decodedToken = jwtDecode<{ id: string; role: "USER" | "ADMIN" }>(token);
+        const user = await handleGetUser(token);
+        const userData = user.data.data;
 
-        if (decodedToken.role === "ADMIN") {
+        if (userData.role === "ADMIN") {
           router.push("/admin");
         } else {
           router.push("/profile");

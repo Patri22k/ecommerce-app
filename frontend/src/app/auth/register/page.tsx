@@ -13,6 +13,7 @@ import SubmitButton from "@/components/common/button/SubmitButton";
 import RedirectLink from "@/components/common/link/RedirectLink";
 import MainBase from "@/components/common/Main";
 import Heading1 from "@/components/ui/Heading1";
+import handleRegisterUser from "@/lib/auth/register";
 
 export default function RegisterPage() {
   const [name, setName] = useState<string>("");
@@ -44,11 +45,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/register", {
-        name,
-        email,
-        password
-      });
+      const response = await handleRegisterUser(name, email, password);
 
       if (response.data?.status === "success") {
         localStorage.setItem("token", response.data.token);
