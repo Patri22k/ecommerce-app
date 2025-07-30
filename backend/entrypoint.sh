@@ -12,9 +12,6 @@ echo "Postgres is up - continuing..."
 echo "Generating Prisma client..."
 npx prisma generate
 
-echo "Resolving existing migration drift..."
-# npx prisma migrate resolve --applied 20201207184859_initial_migration
-
 echo "Running prisma migrations..."
 npx prisma migrate dev --name init --skip-seed
 

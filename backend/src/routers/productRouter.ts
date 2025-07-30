@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 router.use(authUserToken);
 
-router.post('',
+router.post('/',
   authorizeRole("ADMIN"),
   async(req, res, next) => {
   const { title, description, category, imageUrl, price  } = req.body;

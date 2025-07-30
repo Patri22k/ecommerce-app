@@ -137,12 +137,12 @@ export default function LoginPage() {
               </span>
             ) : loading ? (
               <span className={"flex items-center justify-center gap-x-2"}>
-                  <LoaderCircle className={"animate-spin"}/><span>Loading...</span>
-                </span>
+                <LoaderCircle className={"animate-spin"}/><span>Loading...</span>
+              </span>
             ) : (
               <span>
-                    Login
-                  </span>
+                Login
+              </span>
             )}
           />
         </form>

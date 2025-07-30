@@ -11,7 +11,7 @@ with the following content:
 # Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
 # See the documentation for all the connection string options: https://pris.ly/d/connection-strings
 
-DATABASE_URL="postgresql://user:password@postgres:5432/ecommerceapp"
+DATABASE_URL="postgresql://user:password@postgres:5432/ecommerce-app"
 JWT_TOKEN="your-jwt-secret"
 
 # The following env variables are used for Prisma seeding.

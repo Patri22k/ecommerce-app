@@ -4,6 +4,7 @@ import zodErrorHandler from "./errors/zodErrorHandler";
 import globalErrorHandler from "./errors/globalErrorHandler";
 import {authRouter} from './routers/authRouter';
 import {productRouter} from "./routers/productRouter";
+import {userRouter} from "./routers/userRouter";
 import prismaErrorHandler from "./errors/prismaErrorHandler";
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors({
 // Defined routes
 app.use('/api/auth', authRouter);
 app.use('/api/product', productRouter);
+app.use('/api/me', userRouter);
 
 app.use(zodErrorHandler); // Zod error handler
 app.use(prismaErrorHandler); // Prisma error handler
