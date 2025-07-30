@@ -19,7 +19,7 @@ router.post('/register', async (req, res, next) => {
       }
     });
 
-    const token = generateJwtToken(user.id, user.role);
+    const token = generateJwtToken(user.id);
 
     return res.status(201).json({
       status: "success",
@@ -52,7 +52,7 @@ router.post('/login', async (req, res, next) => {
       return res.status(401).json({status: "fail", message: "Invalid email or password"});
     }
 
-    const token = generateJwtToken(user.id, user.role);
+    const token = generateJwtToken(user.id);
 
     return res.status(200).json({
       status: "success",

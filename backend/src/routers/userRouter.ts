@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
   }
 
   try {
-    const decodedToken = jwt.verify(token, JWT_SECRET) as { id: string, role: "USER" | "ADMIN" };
+    const decodedToken = jwt.verify(token, JWT_SECRET) as { id: string };
 
     if (!decodedToken) {
       return res.status(401).json({
@@ -27,11 +27,9 @@ router.get('/', async (req, res, next) => {
       });
     }
 
-    // TODO FIX: Instead of using findFirst, use findUnique with only id
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: {
-        id: decodedToken.id,
-        role: decodedToken.role
+        id: decodedToken.id
       },
       select: {
         id: true,
