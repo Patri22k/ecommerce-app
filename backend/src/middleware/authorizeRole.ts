@@ -1,10 +1,14 @@
-import { Response, NextFunction } from "express";
-import { AuthenticatedRequest } from "./authUserToken";
+import { Request, Response, NextFunction } from "express";
+
+interface AuthenticatedRequest extends Request {
+  user?: {
+    id: string;
+    role: string;
+  }
+}
 
 export const authorizeRole = (...roles: string[]) => {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    console.log("Authenticated request:", req);
-
     if (!req.user || !roles.includes(req.user.role)) {
       return res.status(403).json({
         status: "fail",

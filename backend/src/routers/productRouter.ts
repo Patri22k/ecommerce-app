@@ -1,8 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import slugify from "slugify";
 import {Router} from "express";
+import { PrismaClient } from "@prisma/client";
 import {authorizeRole} from "../middleware/authorizeRole";
 import {authUserToken} from "../middleware/authUserToken";
-import slugify from "slugify";
 
 const router = Router();
 const prisma = new PrismaClient();

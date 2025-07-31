@@ -6,7 +6,7 @@ interface HeaderProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLE
 
 export default function Header({ children, className = "", ...rest }: HeaderProps) {
   return (
-    <header className={`flex items-start justify-between w-full mb-6 ${className}`} {...rest}>
+    <header className={`flex items-start justify-between w-full mt-2 mb-6 ${className}`} {...rest}>
       {children}
     </header>
   )
