@@ -1,9 +1,10 @@
-import {Response, Request, NextFunction} from "express";
-const zodErrorHandler = (
-  error: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
+import {ErrorRequestHandler} from "express";
+
+const zodErrorHandler: ErrorRequestHandler = (
+  error,
+  _,
+  res,
+  next
 ) => {
   if (isZodError(error)) {
     return res.status(400).json({

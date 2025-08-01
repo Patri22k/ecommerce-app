@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 const JWT_SECRET = process.env.JWT_TOKEN!;
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
@@ -17,35 +17,31 @@ router.get('/', async (req, res, next) => {
     })
   }
 
-  try {
-    const decodedToken = jwt.verify(token, JWT_SECRET) as { id: string };
+  const decodedToken = jwt.verify(token, JWT_SECRET) as { id: string };
 
-    if (!decodedToken) {
-      return res.status(401).json({
-        status: "fail",
-        message: "Invalid token."
-      });
-    }
-
-    const user = await prisma.user.findUnique({
-      where: {
-        id: decodedToken.id
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true
-      }
+  if (!decodedToken) {
+    return res.status(401).json({
+      status: "fail",
+      message: "Invalid token."
     });
-
-    return res.status(200).json({
-      status: "success",
-      data: user,
-    });
-  } catch (error) {
-    next(error);
   }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: decodedToken.id
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true
+    }
+  });
+
+  return res.status(200).json({
+    status: "success",
+    data: user,
+  });
 })
 
 export const userRouter = router;

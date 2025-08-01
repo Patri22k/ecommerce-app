@@ -1,10 +1,10 @@
-import {Request, Response, NextFunction} from "express";
+import {ErrorRequestHandler} from "express";
 
-const globalErrorHandler = (
-  error: any,
-  req: Request,
-  res: Response,
-  next: NextFunction) => {
+const globalErrorHandler: ErrorRequestHandler = (
+  error,
+  _,
+  res,
+  __) => {
   const status = error.status || 500;
   const message = error.message || "Internal Server Error";
 

@@ -1,5 +1,5 @@
 import {Prisma} from "@prisma/client";
-import {Request, Response, NextFunction} from "express";
+import {ErrorRequestHandler} from "express";
 
 class HttpError extends Error {
   status: number;
@@ -10,11 +10,7 @@ class HttpError extends Error {
   }
 }
 
-const prismaErrorHandler = (
-  error: any,
-  req: Request,
-  res: Response,
-  next: NextFunction) => {
+const prismaErrorHandler: ErrorRequestHandler = (error, _, __, next) => {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     switch (error.code) {
       case "P1000":
