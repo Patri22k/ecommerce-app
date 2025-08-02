@@ -10,6 +10,8 @@ import handleGetUser from "@/lib/me";
 import GlobalError from "@/components/common/error/GlobalError";
 import LoadPage from "@/components/common/LoadPage";
 import Heading1 from "@/components/ui/Heading1";
+import Product, {ProductProps} from "@/components/common/Product";
+import handleFetchingProducts from "@/lib/fetchProducts";
 
 export interface AdminProps {
   id: string;
@@ -21,7 +23,7 @@ export interface AdminProps {
 export default function AdminPage() {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [admin, setAdmin] = useState<AdminProps | null>(null);
-
+  const [products, setProducts] = useState<ProductProps[] | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{
     general?: string;
     adminData?: string;
@@ -62,11 +64,42 @@ export default function AdminPage() {
       }
     }
 
+    const fetchProducts = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setFieldErrors({
+          adminData: "You do not have permission to access the admin page."
+        });
+        return;
+      }
+
+      try {
+        const response = await handleFetchingProducts(token);
+
+        console.log("Fetched products:", response.data.data);
+
+        setProducts(response.data.data);
+      } catch (error) {
+        console.log("Error fetching products:", error);
+
+        setFieldErrors({
+          general: "An error occurred while fetching products. Please try again."
+        })
+      }
+    }
+
     fetchAdminData().catch(() => {
       setFieldErrors({
         adminData: "An error occurred while fetching admin data. Please try again."
       });
       setInitialized(true);
+    });
+
+    fetchProducts().catch(() => {
+      setFieldErrors({
+        general: "An error occurred while fetching products. Please try again."
+      });
     });
   }, [router]);
 
@@ -82,6 +115,8 @@ export default function AdminPage() {
     );
   }
 
+  // TODO: Style to products and add X button to delete products
+
   return (
     <>
       <Header>
@@ -96,6 +131,23 @@ export default function AdminPage() {
           )
         }
         </Heading1>
+        {products && products.length > 0 ? (
+          products.map((product) => {
+            return (
+              <Product
+                key={product.id}
+                name={product.name}
+                description={product.description}
+                imageUrl={product.imageUrl}
+                price={product.price}
+              />
+            )
+            })
+        ) : (
+          <span className={"text-red-700"}>
+            {fieldErrors.general ?? fieldErrors.adminData}
+          </span>
+        )}
         <RedirectLink href={"/admin/product"} label={"Create Product"}/>
       </Main>
     </>

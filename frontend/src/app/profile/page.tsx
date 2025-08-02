@@ -31,6 +31,7 @@ export default function ProfilePage() {
         ) : (
           <div>
             {/* TODO: Implement profile info like name, email, etc. */}
+            <span>You are currently logged in!</span>
           </div>
         )}
       </MainBase>

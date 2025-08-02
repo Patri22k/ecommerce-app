@@ -1,16 +1,17 @@
 import Image from "next/image";
 import {ShoppingCart} from "lucide-react";
 
-interface ProductProps {
-  id: string;
+export interface ProductProps {
+  id?: string;
   name: string;
   description: string;
-  price: number;
+  category?: string[];
   imageUrl: string;
+  price: number;
 }
 
 export default function Product(props: ProductProps) {
-  const {name, price, imageUrl} = props;
+  const {name, price, imageUrl=""} = props;
 
   return (
     <div className={"flex flex-col justify-center items-center text-center text-xs w-full " +
