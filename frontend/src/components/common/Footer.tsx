@@ -6,7 +6,7 @@ interface FooterProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLE
 
 export default function Footer({ children, className = "", ...rest }: FooterProps) {
   return (
-    <footer className={`w-full fixed bottom-0 left-0 bg-white z-10 mb-2 ${className}`} {...rest}>
+    <footer className={`w-full fixed bottom-0 left-0 bg-white z-10 ${className}`} {...rest}>
       {children}
     </footer>
   );
