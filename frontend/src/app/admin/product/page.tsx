@@ -3,7 +3,7 @@
 import axios from "axios";
 import {toast, Toaster} from "sonner";
 import {LoaderCircle} from "lucide-react";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Header from "@/components/common/Header";
 import SmartHubLogo from "@/components/ui/SmartHubLogo";
 import MainBase from "@/components/common/Main";
@@ -12,14 +12,11 @@ import ArrayInput from "@/components/common/input/ArrayInput";
 import SubmitButton from "@/components/common/button/SubmitButton";
 import GlobalError from "@/components/common/error/GlobalError";
 import LoadPage from "@/components/common/LoadPage";
-import {AdminProps} from "@/app/admin/page";
-import handleGetUser from "@/lib/me";
-import {useRouter} from "next/navigation";
+import useAdminAccess from "@/hooks/useAdminAccess";
+import RedirectLink from "@/components/common/link/RedirectLink";
 
 export default function ProductPage() {
-  const [initialized, setInitialized] = useState<boolean>(false);
-
-  const [, setAdmin] = useState<AdminProps | null>(null);
+  const {initialized, adminError} = useAdminAccess();
 
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -28,7 +25,6 @@ export default function ProductPage() {
   const [price, setPrice] = useState<string>("");
   const [fieldErrors, setFieldErrors] = useState<{
     general?: string;
-    adminData?: string;
     title?: string;
     description?: string;
     categories?: string;
@@ -36,49 +32,6 @@ export default function ProductPage() {
   }>({});
 
   const [loading, setLoading] = useState<boolean>(false);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    const fetchAdminData = async () => {
-      setInitialized(false);
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        setFieldErrors({
-          adminData: "You must be logged in to access the admin page."
-        });
-        setInitialized(true);
-        return;
-      }
-
-      try {
-        const response = await handleGetUser(token);
-
-        if (response.data.data.role !== "ADMIN") {
-          setFieldErrors({
-            adminData: "You do not have permission to access the admin page."
-          });
-          return;
-        }
-
-        setAdmin(response.data.data);
-      } catch {
-        setFieldErrors({
-          adminData: "An error occurred while fetching admin data. Please try again."
-        });
-      } finally {
-        setInitialized(true);
-      }
-    }
-
-    fetchAdminData().catch(() => {
-      setFieldErrors({
-        adminData: "An error occurred while fetching admin data. Please try again."
-      });
-      setInitialized(true);
-    });
-  }, [router]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
@@ -158,17 +111,9 @@ export default function ProductPage() {
     }
   }
 
-  if (!initialized) {
-    return (
-      <LoadPage/>
-    );
-  }
+  if (!initialized) return <LoadPage/>;
 
-  if (fieldErrors.adminData) {
-    return (
-      <GlobalError name={"admin-error"} message={fieldErrors.adminData}/>
-    );
-  }
+  if (adminError) return <GlobalError name={"admin-error"} message={adminError}/>;
 
   return (
     <>
@@ -236,6 +181,7 @@ export default function ProductPage() {
             )}
           />
         </form>
+        <RedirectLink href={"/admin"} label={"Back to Admin Dashboard"}/>
       </MainBase.Form>
     </>
   );

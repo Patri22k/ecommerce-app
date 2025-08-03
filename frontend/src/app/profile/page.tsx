@@ -27,12 +27,12 @@ export default function ProfilePage() {
       </Header>
       <MainBase>
         {loggedIn ? (
-          <RedirectLink href={"/auth/login"} />
+            <div>
+              {/* TODO: Implement profile info like name, email, etc. */}
+              <span>You are currently logged in!</span>
+            </div>
         ) : (
-          <div>
-            {/* TODO: Implement profile info like name, email, etc. */}
-            <span>You are currently logged in!</span>
-          </div>
+          <RedirectLink href={"/auth/login"} />
         )}
       </MainBase>
       <Footer>

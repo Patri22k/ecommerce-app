@@ -6,114 +6,50 @@ import Main from "@/components/common/Main";
 import RedirectLink from "@/components/common/link/RedirectLink";
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
-import handleGetUser from "@/lib/me";
 import GlobalError from "@/components/common/error/GlobalError";
 import LoadPage from "@/components/common/LoadPage";
 import Heading1 from "@/components/ui/Heading1";
 import Product, {ProductProps} from "@/components/common/Product";
 import handleFetchingProducts from "@/lib/fetchProducts";
-
-export interface AdminProps {
-  id: string;
-  name: string;
-  email: string;
-  role: "USER" | "ADMIN";
-}
+import useAdminAccess from "@/hooks/useAdminAccess";
 
 export default function AdminPage() {
-  const [initialized, setInitialized] = useState<boolean>(false);
-  const [admin, setAdmin] = useState<AdminProps | null>(null);
+  const {initialized, admin, adminError} = useAdminAccess();
   const [products, setProducts] = useState<ProductProps[] | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{
     general?: string;
-    adminData?: string;
   }>({});
 
   const router = useRouter();
 
   useEffect(() => {
-    const fetchAdminData = async () => {
-      setInitialized(false);
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        setFieldErrors({
-          adminData: "You must be logged in to access the admin page."
-        });
-        setInitialized(true);
-        return;
-      }
-
-      try {
-        const adminData = await handleGetUser(token);
-
-        if (adminData.data.data.role !== "ADMIN") {
-          setFieldErrors({
-            adminData: "You do not have permission to access the admin page."
-          });
-          return;
-        }
-
-        setAdmin(adminData.data.data);
-      } catch {
-        setFieldErrors({
-          adminData: "Invalid token or you are not logged in."
-        });
-      } finally {
-        setInitialized(true);
-      }
-    }
+    if (!initialized || !admin || adminError) return;
 
     const fetchProducts = async () => {
       const token = localStorage.getItem("token");
 
-      if (!token) {
-        setFieldErrors({
-          adminData: "You do not have permission to access the admin page."
-        });
-        return;
-      }
+      if (!token) return;
 
       try {
         const response = await handleFetchingProducts(token);
-
-        console.log("Fetched products:", response.data.data);
-
         setProducts(response.data.data);
-      } catch (error) {
-        console.log("Error fetching products:", error);
-
+      } catch {
         setFieldErrors({
           general: "An error occurred while fetching products. Please try again."
         })
       }
     }
 
-    fetchAdminData().catch(() => {
-      setFieldErrors({
-        adminData: "An error occurred while fetching admin data. Please try again."
-      });
-      setInitialized(true);
-    });
-
     fetchProducts().catch(() => {
       setFieldErrors({
         general: "An error occurred while fetching products. Please try again."
       });
     });
-  }, [router]);
+  }, [router, initialized, admin, adminError]);
 
-  if (!initialized) {
-    return (
-      <LoadPage/>
-    );
-  }
+  if (!initialized) return <LoadPage/>;
 
-  if (fieldErrors.adminData) {
-    return (
-      <GlobalError name={"general-error"} message={fieldErrors.adminData}/>
-    );
-  }
+  if (adminError) return <GlobalError name={"general-error"} message={adminError}/>;
 
   // TODO: Style to products and add X button to delete products
 
@@ -124,8 +60,8 @@ export default function AdminPage() {
       </Header>
       <Main>
         <Heading1>Welcome back {
-          fieldErrors.adminData ? (
-            fieldErrors.adminData
+          adminError ? (
+            adminError
           ) : (
             (admin?.name || "Admin") + "!"
           )
@@ -145,7 +81,7 @@ export default function AdminPage() {
             })
         ) : (
           <span className={"text-red-700"}>
-            {fieldErrors.general ?? fieldErrors.adminData}
+            {fieldErrors.general ?? adminError}
           </span>
         )}
         <RedirectLink href={"/admin/product"} label={"Create Product"}/>
