@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import {useRouter} from "next/navigation";
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import {LoaderCircle} from "lucide-react";
 import Header from "@/components/common/Header";
 import SmartHubLogo from "@/components/ui/SmartHubLogo";
@@ -14,6 +14,7 @@ import RedirectLink from "@/components/common/link/RedirectLink";
 import MainBase from "@/components/common/Main";
 import Heading1 from "@/components/ui/Heading1";
 import handleRegisterUser from "@/lib/auth/register";
+import useAutoClearError from "@/hooks/useAutoClearError";
 
 export default function RegisterPage() {
   const [name, setName] = useState<string>("");
@@ -29,15 +30,7 @@ export default function RegisterPage() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (fieldErrors.general) {
-      const timeout = setTimeout(() => {
-        setFieldErrors({});
-      }, 5000);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [fieldErrors.general]);
+  useAutoClearError(fieldErrors.general, setFieldErrors);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

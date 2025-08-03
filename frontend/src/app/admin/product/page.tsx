@@ -14,6 +14,7 @@ import GlobalError from "@/components/common/error/GlobalError";
 import LoadPage from "@/components/common/LoadPage";
 import useAdminAccess from "@/hooks/useAdminAccess";
 import RedirectLink from "@/components/common/link/RedirectLink";
+import useAutoClearError from "@/hooks/useAutoClearError";
 
 export default function ProductPage() {
   const {initialized, adminError} = useAdminAccess();
@@ -32,6 +33,8 @@ export default function ProductPage() {
   }>({});
 
   const [loading, setLoading] = useState<boolean>(false);
+
+  useAutoClearError(fieldErrors.general, setFieldErrors);
 
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
