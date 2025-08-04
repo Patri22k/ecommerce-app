@@ -9,7 +9,7 @@ import {useRouter} from "next/navigation";
 import GlobalError from "@/components/common/error/GlobalError";
 import LoadPage from "@/components/common/LoadPage";
 import Heading1 from "@/components/ui/Heading1";
-import Product, {ProductProps} from "@/components/common/Product";
+import Product, {ProductProps} from "@/components/product/Product";
 import handleFetchingProducts from "@/lib/fetchProducts";
 import useAdminAccess from "@/hooks/useAdminAccess";
 
@@ -76,6 +76,7 @@ export default function AdminPage() {
                 description={product.description}
                 imageUrl={product.imageUrl}
                 price={product.price}
+                onClick={() => router.push(`/admin/product/${product.id}`)}
               />
             )
             })

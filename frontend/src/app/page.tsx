@@ -1,6 +1,6 @@
 import { Search } from 'lucide-react';
 import Navbar from "@/components/common/Navbar";
-import Product from "@/components/common/Product";
+import Product from "@/components/product/Product";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import SmartHubLogo from "@/components/ui/SmartHubLogo";
@@ -15,6 +15,8 @@ export default function HomePage() {
         <Search className="mx-3 mt-2 mr-4" />
       </Header>
       <MainBase>
+        {/* JUST FOR TESTING */}
+        {/* END OF TESTING */}
         <Heading2>The best products for you</Heading2>
         <div className="grid grid-cols-2 gap-3">
           <Product

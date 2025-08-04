@@ -16,7 +16,7 @@ import useAdminAccess from "@/hooks/useAdminAccess";
 import RedirectLink from "@/components/common/link/RedirectLink";
 import useAutoClearError from "@/hooks/useAutoClearError";
 
-export default function ProductPage() {
+export default function CreateProductPage() {
   const {initialized, adminError} = useAdminAccess();
 
   const [title, setTitle] = useState<string>("");

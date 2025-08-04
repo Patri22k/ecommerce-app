@@ -1,7 +1,8 @@
 import Image from "next/image";
 import {ShoppingCart} from "lucide-react";
+import React from "react";
 
-export interface ProductProps {
+export interface ProductProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   id?: string;
   name: string;
   description: string;
@@ -10,12 +11,10 @@ export interface ProductProps {
   price: number;
 }
 
-export default function Product(props: ProductProps) {
-  const {name, price, imageUrl=""} = props;
-
+export default function Product({name,price,imageUrl="", ...next}: ProductProps) {
   return (
     <div className={"flex flex-col justify-center items-center text-center text-xs w-full " +
-    "shadow rounded pt-2 gap-y-2 bg-white"}>
+    "shadow rounded pt-2 gap-y-2 bg-white"} {...next}>
       <div className={"flex flex-col justify-center items-center text-left gap-y-2 pb-1"}>
         <Image
           src={imageUrl}
