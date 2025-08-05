@@ -9,13 +9,13 @@ import {useRouter} from "next/navigation";
 import GlobalError from "@/components/common/error/GlobalError";
 import LoadPage from "@/components/common/LoadPage";
 import Heading1 from "@/components/ui/Heading1";
-import Product, {ProductProps} from "@/components/product/Product";
 import handleFetchingProducts from "@/lib/fetchProducts";
 import useAdminAccess from "@/hooks/useAdminAccess";
+import AdminProduct, {AdminProductProps} from "@/components/product/AdminProduct";
 
 export default function AdminPage() {
   const {initialized, admin, adminError} = useAdminAccess();
-  const [products, setProducts] = useState<ProductProps[] | null>(null);
+  const [products, setProducts] = useState<AdminProductProps[] | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{
     general?: string;
   }>({});
@@ -59,7 +59,7 @@ export default function AdminPage() {
         <SmartHubLogo/>
       </Header>
       <Main>
-        <Heading1>Welcome back {
+        <Heading1>Welcome back, {
           adminError ? (
             adminError
           ) : (
@@ -70,7 +70,7 @@ export default function AdminPage() {
         {products && products.length > 0 ? (
           products.map((product) => {
             return (
-              <Product
+              <AdminProduct
                 key={product.id}
                 name={product.name}
                 description={product.description}

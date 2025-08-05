@@ -31,14 +31,22 @@ services:
       - "3000:3000"
     depends_on:
       - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: npm run dev
 
-  payment-service:
-    build: ./services/payment-service
-    container_name: payment-service
-    ports:
-      - "8080:8080"
-    depends_on:
-      - backend
+  # TODO: Remove later
+  # payment-service:
+    # build: ./services/payment-service
+    # container_name: payment-service
+    # ports:
+      # - "8080:8080"
+    # depends_on:
+      # - backend
 
 volumes:
   postgres_data:
