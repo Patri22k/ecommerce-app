@@ -4,17 +4,17 @@ import axios from "axios";
 import {toast, Toaster} from "sonner";
 import {LoaderCircle} from "lucide-react";
 import React, {useState} from "react";
-import Header from "@/components/common/Header";
-import SmartHubLogo from "@/components/ui/SmartHubLogo";
-import MainBase from "@/components/common/Main";
-import TextInput from "@/components/common/input/TextInput";
-import ArrayInput from "@/components/common/input/ArrayInput";
-import SubmitButton from "@/components/common/button/SubmitButton";
-import GlobalError from "@/components/common/error/GlobalError";
-import LoadPage from "@/components/common/LoadPage";
-import useAdminAccess from "@/hooks/useAdminAccess";
-import RedirectLink from "@/components/common/link/RedirectLink";
-import useAutoClearError from "@/hooks/useAutoClearError";
+import Header from "@/components/common/header";
+import SmartHubLogo from "@/components/ui/smarthub-logo";
+import MainBase from "@/components/common/main";
+import TextInput from "@/components/common/input/text-input";
+import ArrayInput from "@/components/common/input/array-input";
+import SubmitButton from "@/components/common/button/submit-button";
+import GlobalError from "@/components/common/error/global-error";
+import LoadPage from "@/components/common/load-page";
+import useAdminAccess from "@/hooks/use-admin-access";
+import RedirectLink from "@/components/common/link/redirect-link";
+import useAutoClearError from "@/hooks/use-auto-clear-error";
 
 export default function CreateProductPage() {
   const {initialized, adminError} = useAdminAccess();

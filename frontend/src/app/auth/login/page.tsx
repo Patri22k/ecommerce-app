@@ -4,17 +4,17 @@ import axios from "axios";
 import {useRouter} from "next/navigation";
 import React, {FormEvent, useState} from "react";
 import {LoaderCircle} from "lucide-react";
-import Header from "@/components/common/Header";
-import SmartHubLogo from "@/components/ui/SmartHubLogo";
-import SubmitButton from "@/components/common/button/SubmitButton";
-import PasswordInput from "@/components/common/input/PasswordInput";
-import EmailInput from "@/components/common/input/EmailInput";
-import RedirectLink from "@/components/common/link/RedirectLink";
-import MainBase from "@/components/common/Main";
-import Heading1 from "@/components/ui/Heading1";
-import handleLoginUser from "@/lib/auth/login";
-import handleGetUser from "@/lib/me";
-import useAutoClearError from "@/hooks/useAutoClearError";
+import Header from "@/components/common/header";
+import SmartHubLogo from "@/components/ui/smarthub-logo";
+import SubmitButton from "@/components/common/button/submit-button";
+import PasswordInput from "@/components/common/input/password-input";
+import EmailInput from "@/components/common/input/email-input";
+import RedirectLink from "@/components/common/link/redirect-link";
+import MainBase from "@/components/common/main";
+import Heading1 from "@/components/ui/heading1";
+import useAutoClearError from "@/hooks/use-auto-clear-error";
+import getUser from "@/lib/get-user";
+import loginUser from "@/lib/auth/login";
 
 
 export default function LoginPage() {
@@ -37,13 +37,13 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await handleLoginUser(email, password);
+      const response = await loginUser(email, password);
 
       if (response.data?.status === "success") {
         const token = response.data.token;
         localStorage.setItem("token", token);
 
-        const user = await handleGetUser(token);
+        const user = await getUser(token);
         const userData = user.data.data;
 
         if (userData.role === "ADMIN") {

@@ -1,11 +1,11 @@
 import { Search } from 'lucide-react';
-import Navbar from "@/components/common/Navbar";
-import Product from "@/components/product/Product";
-import Header from "@/components/common/Header";
-import Footer from "@/components/common/Footer";
-import SmartHubLogo from "@/components/ui/SmartHubLogo";
-import MainBase from "@/components/common/Main";
-import Heading2 from "@/components/ui/Heading2";
+import Navbar from "@/components/common/navbar";
+import Product from "@/components/product/product";
+import Header from "@/components/common/header";
+import Footer from "@/components/common/footer";
+import SmartHubLogo from "@/components/ui/smarthub-logo";
+import MainBase from "@/components/common/main";
+import Heading2 from "@/components/ui/heading2";
 
 export default function HomePage() {
   return (

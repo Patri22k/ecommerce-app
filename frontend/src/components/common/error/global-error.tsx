@@ -1,4 +1,4 @@
-import Heading1 from "@/components/ui/Heading1";
+import Heading1 from "@/components/ui/heading1";
 import {Frown} from "lucide-react";
 
 interface GlobalErrorProps {

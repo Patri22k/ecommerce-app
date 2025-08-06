@@ -1,6 +1,6 @@
 "use client";
 
-import NavbarLink from "@/components/common/link/NavbarLink";
+import NavbarLink from "@/components/common/link/navbar-link";
 import {House, ShoppingCart, User} from "lucide-react";
 import {usePathname} from "next/navigation";
 

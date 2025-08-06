@@ -4,17 +4,17 @@ import axios from "axios";
 import {useRouter} from "next/navigation";
 import React, {FormEvent, useState} from "react";
 import {LoaderCircle} from "lucide-react";
-import Header from "@/components/common/Header";
-import SmartHubLogo from "@/components/ui/SmartHubLogo";
-import TextInput from "@/components/common/input/TextInput";
-import EmailInput from "@/components/common/input/EmailInput";
-import PasswordInput from "@/components/common/input/PasswordInput";
-import SubmitButton from "@/components/common/button/SubmitButton";
-import RedirectLink from "@/components/common/link/RedirectLink";
-import MainBase from "@/components/common/Main";
-import Heading1 from "@/components/ui/Heading1";
-import handleRegisterUser from "@/lib/auth/register";
-import useAutoClearError from "@/hooks/useAutoClearError";
+import Header from "@/components/common/header";
+import SmartHubLogo from "@/components/ui/smarthub-logo";
+import TextInput from "@/components/common/input/text-input";
+import EmailInput from "@/components/common/input/email-input";
+import PasswordInput from "@/components/common/input/password-input";
+import SubmitButton from "@/components/common/button/submit-button";
+import RedirectLink from "@/components/common/link/redirect-link";
+import MainBase from "@/components/common/main";
+import Heading1 from "@/components/ui/heading1";
+import useAutoClearError from "@/hooks/use-auto-clear-error";
+import registerUser from "@/lib/auth/register";
 
 export default function RegisterPage() {
   const [name, setName] = useState<string>("");
@@ -38,7 +38,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const response = await handleRegisterUser(name, email, password);
+      const response = await registerUser(name, email, password);
 
       if (response.data?.status === "success") {
         localStorage.setItem("token", response.data.token);

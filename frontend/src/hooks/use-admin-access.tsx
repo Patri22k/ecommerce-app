@@ -1,7 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
-import handleGetUser from "@/lib/me";
+import handleGetUser from "@/lib/get-user";
 
 export interface AdminProps {
   id: string;
