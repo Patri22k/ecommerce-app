@@ -22,9 +22,9 @@ export default function AdminPage() {
   }>({});
 
   const router = useRouter();
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     if (!initialized || !admin || adminError) return;
 
     const fetchProducts = async () => {
@@ -46,9 +46,10 @@ export default function AdminPage() {
         general: "An error occurred while fetching products. Please try again."
       });
     });
-  }, [router, token, initialized, admin, adminError]);
+  }, [router, initialized, admin, adminError]);
 
   const handleDeleteProduct = async (productId?: string) => {
+    const token = localStorage.getItem("token");
     if (!token) {
       setFieldErrors({
         general: "You must be logged in to delete a product."
@@ -105,9 +106,8 @@ export default function AdminPage() {
                 <AdminProduct
                   key={product.id}
                   id={product.id}
-                  title={product.title}
-                  description={product.description}
                   imageUrl={product.imageUrl}
+                  title={product.title}
                   price={product.price}
                   moreInfo={() => router.push(`/admin/product/${product.id}`)}
                   onDelete={() => handleDeleteProduct(product.id)}
