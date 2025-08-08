@@ -24,26 +24,22 @@ export default function AdminPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (!initialized || !admin || adminError) return;
 
     const fetchProducts = async () => {
-
-      if (!token) return;
-
       try {
-        const response = await fetchingProducts(token);
+        const response = await fetchingProducts();
         setProducts(response.data.data);
       } catch {
         setFieldErrors({
-          general: "An error occurred while fetching products. Please try again."
+          general: "An error occurred while fetching product. Please try again."
         })
       }
     }
 
     fetchProducts().catch(() => {
       setFieldErrors({
-        general: "An error occurred while fetching products. Please try again."
+        general: "An error occurred while fetching product. Please try again."
       });
     });
   }, [router, initialized, admin, adminError]);
@@ -79,9 +75,9 @@ export default function AdminPage() {
 
   if (!initialized) return <LoadPage/>;
 
-  if (adminError) return <GlobalError name={"general-error"} message={adminError}/>;
+  if (adminError) return <GlobalError name={"Error with credentials"} message={adminError}/>;
 
-  // TODO: Style to products and add X button to delete products
+  // TODO: Style to product and add X button to delete product
 
   return (
     <>

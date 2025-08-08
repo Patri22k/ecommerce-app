@@ -7,9 +7,6 @@ import {authUserToken} from "../middleware/authUserToken";
 const router = Router();
 const prisma = new PrismaClient();
 
-router.use(authUserToken);
-router.use(authorizeRole("ADMIN"));
-
 router.get("/:id", async (req, res) => {
   const {id} = req.params;
 
@@ -33,6 +30,9 @@ router.get("/", async (req, res) => {
 
   return res.status(200).json({status: "success", data: products});
 });
+
+router.use(authUserToken);
+router.use(authorizeRole("ADMIN"));
 
 router.post('/', async (req, res) => {
   const {title, description, category, imageUrl, price} = req.body;

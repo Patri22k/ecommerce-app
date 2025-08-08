@@ -7,7 +7,7 @@ import {AdminProductProps} from "@/components/product/admin-product";
 import LoadPage from "@/components/common/load-page";
 import DetailedAdminProduct from "@/components/product/detailed-admin-product";
 
-export default function ProductPage() {
+export default function AdminProductPage() {
   const params = useParams();
   const pageId = params?.id as string; // currently pageId is productId
 

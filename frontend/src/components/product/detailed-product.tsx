@@ -1,12 +1,12 @@
-import {AdminProductProps} from "@/components/product/admin-product";
 import Heading1 from "@/components/ui/heading1";
 import Image from "next/image";
+import {ProductProps} from "@/components/product/product";
 
-interface DetailedAdminProductProps {
-  content: AdminProductProps;
+interface DetailedProductProps {
+  content: ProductProps;
 }
 
-export default function DetailedAdminProduct({content}: DetailedAdminProductProps) {
+export default function DetailedProduct({content}: DetailedProductProps) {
   return (
     <div className={"flex flex-col items-center justify-start gap-y-6 w-full min-h-screen p-4"}>
       <Heading1>{content.title}</Heading1>
@@ -24,7 +24,6 @@ export default function DetailedAdminProduct({content}: DetailedAdminProductProp
         </div>
       )}
       <p>{content.description}</p>
-      <p>{content.status}</p>
       <p>{content.price}</p>
     </div>
   );

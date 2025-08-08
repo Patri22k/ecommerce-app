@@ -134,7 +134,7 @@ export default function CreateProductPage() {
       <MainBase.Form>
         <form
           id={"admin-form"}
-          className={"flex flex-col items-center justify-center w-full"}
+          className={"flex flex-col items-center justify-center w-full pb-8"}
           onSubmit={handleSubmit}
         >
           <TextInput
