@@ -1,6 +1,7 @@
 import Image from "next/image";
 import {ShoppingCart, X} from "lucide-react";
 import React from "react";
+import NoImageAvailable from "@/components/common/no-image-available";
 
 export interface AdminProductProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   id?: string;
@@ -33,16 +34,20 @@ export default function AdminProduct({title,price,imageUrl="", moreInfo, onDelet
       </button>
 
       <div
-        className={"flex flex-col justify-center items-center w-[90%] mx-auto text-center gap-y-2 pb-1"}
+        className={"flex flex-col justify-center items-center w-[80%] mx-auto text-center gap-y-2 pb-1"}
       >
-        <Image
-          src={imageUrl}
-          className="w-full h-auto py-2"
-          alt="Product Image"
-          width="0"
-          height="0"
-          sizes="100vw"
-        />
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            className="w-full h-auto py-2"
+            alt="Product Image"
+            width="0"
+            height="0"
+            sizes="100vw"
+          />
+        ) : (
+          <NoImageAvailable/>
+        )}
         <span className={"w-[90%] mx-auto text-cyan-800"}>{title}</span>
         <span className={"text-base font-bold w-[90%] mx-auto text-red-600"}>{price} €</span>
       </div>

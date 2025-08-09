@@ -1,6 +1,7 @@
 import Image from "next/image";
 import {ShoppingCart} from "lucide-react";
 import React from "react";
+import NoImageAvailable from "@/components/common/no-image-available";
 
 export interface ProductProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   id?: string;
@@ -16,7 +17,7 @@ export default function Product({title,price,imageUrl, moreInfo, ...next}: Produ
   return (
     <div className={"flex flex-col justify-center items-center text-center text-xs w-full " +
     "shadow rounded pt-2 gap-y-2 bg-white"} onClick={() => moreInfo?.()} {...next}>
-      <div className={"flex flex-col justify-center items-center w-[90%] mx-auto gap-y-2 pb-1"}>
+      <div className={"flex flex-col justify-center items-center w-[80%] mx-auto gap-y-2 pb-1"}>
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -27,9 +28,7 @@ export default function Product({title,price,imageUrl, moreInfo, ...next}: Produ
             sizes="100vw"
           />
         ) : (
-          <div className={"w-full py-10 bg-gray-200 flex items-center justify-center"}>
-            <span className={"text-gray-500"}>No image available</span>
-          </div>
+          <NoImageAvailable/>
         )}
         <span className={"w-[90%] mx-auto text-cyan-800"}>{title}</span>
         <span className={"text-base font-bold w-[90%] mx-auto text-red-600"}>{price} €</span>

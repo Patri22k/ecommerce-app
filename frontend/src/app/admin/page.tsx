@@ -13,9 +13,12 @@ import fetchingProducts from "@/lib/product/fetch-multiple-products";
 import useAdminAccess from "@/hooks/use-admin-access";
 import AdminProduct, {AdminProductProps} from "@/components/product/admin-product";
 import deleteProduct from "@/lib/product/delete-product";
+import LogOutButton from "@/components/common/button/log-out-button";
+import useIsLoggedIn from "@/hooks/use-is-logged-in";
 
 export default function AdminPage() {
   const {initialized, admin, adminError} = useAdminAccess();
+  const loggedIn = useIsLoggedIn();
   const [products, setProducts] = useState<AdminProductProps[] | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{
     general?: string;
@@ -117,6 +120,10 @@ export default function AdminPage() {
           )}
         </div>
         <RedirectLink href={"/admin/product"} label={"Create Product"}/>
+
+        {loggedIn && (
+          <LogOutButton className={"mt-8"} redirectUrl={"/"} />
+        )}
       </Main>
     </>
   );

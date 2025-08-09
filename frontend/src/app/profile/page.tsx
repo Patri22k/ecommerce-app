@@ -5,20 +5,12 @@ import RedirectLink from "@/components/common/link/redirect-link";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import SmartHubLogo from "@/components/ui/smarthub-logo";
-import {useEffect, useState} from "react";
 import MainBase from "@/components/common/main";
+import LogOutButton from "@/components/common/button/log-out-button";
+import useIsLoggedIn from "@/hooks/use-is-logged-in";
 
 export default function ProfilePage() {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
-  }, []);
+  const loggedIn = useIsLoggedIn();
 
   return (
     <>
@@ -27,9 +19,10 @@ export default function ProfilePage() {
       </Header>
       <MainBase>
         {loggedIn ? (
-            <div>
+            <div className={"flex flex-col items-center justify-center w-full gap-y-3"}>
               {/* TODO: Implement profile info like name, email, etc. */}
               <span>You are currently logged in!</span>
+              <LogOutButton/>
             </div>
         ) : (
           <RedirectLink href={"/auth/login"} />

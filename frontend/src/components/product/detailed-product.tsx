@@ -1,6 +1,7 @@
 import Heading1 from "@/components/ui/heading1";
 import Image from "next/image";
 import {ProductProps} from "@/components/product/product";
+import NoImageAvailable from "@/components/common/no-image-available";
 
 interface DetailedProductProps {
   content: ProductProps;
@@ -8,7 +9,7 @@ interface DetailedProductProps {
 
 export default function DetailedProduct({content}: DetailedProductProps) {
   return (
-    <div className={"flex flex-col items-center justify-start gap-y-6 w-full min-h-screen p-4"}>
+    <div className={"flex flex-col items-center justify-start gap-y-6 mx-auto w-[80%] min-h-screen p-4"}>
       <Heading1>{content.title}</Heading1>
       {content.imageUrl ? (
         <Image
@@ -19,9 +20,7 @@ export default function DetailedProduct({content}: DetailedProductProps) {
           className={"w-full h-auto rounded-lg"}
         />
       ) : (
-        <div className={"w-full py-10 bg-gray-200 flex items-center justify-center"}>
-          <span className={"text-gray-500"}>No image available</span>
-        </div>
+        <NoImageAvailable/>
       )}
       <p>{content.description}</p>
       <p>{content.price}</p>
