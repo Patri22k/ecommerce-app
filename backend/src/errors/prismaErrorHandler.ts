@@ -28,7 +28,7 @@ const prismaErrorHandler: ErrorRequestHandler = (error, _, __, next) => {
       case "P2007":
         return next(new HttpError(400, "Invalid input, data type mismatch."));
       case "P2025":
-        return next(new HttpError(404, "Record not found."));
+        return next(new HttpError(404, "Invalid email or password."));
       default:
         return next(new HttpError(500, "An unknown database error occurred."));
     }

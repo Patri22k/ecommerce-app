@@ -25,7 +25,7 @@ export default function DetailedAdminProduct({content}: DetailedAdminProductProp
       )}
       <p>{content.description}</p>
       <p>{content.status}</p>
-      <p>{content.price}</p>
+      <p>{content.price} €</p>
       <RedirectLink className={"w-full"} href={"/admin"} label={"Back to Admin Panel"}/>
     </div>
   );

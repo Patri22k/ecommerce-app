@@ -12,8 +12,7 @@ export default function SubmitButton({
 }: SubmitButtonProps) {
   return (
     <button
-      className={`bg-gray-100 border rounded w-full py-2 hover:outline-none
-      transition duration-500 ${className}`}
+      className={`bg-gray-100 border rounded w-full transition duration-500 py-2 ${className}`}
       type={"submit"}
       {...next}
     >

@@ -9,7 +9,7 @@ interface DetailedProductProps {
 
 export default function DetailedProduct({content}: DetailedProductProps) {
   return (
-    <div className={"flex flex-col items-center justify-start gap-y-6 mx-auto w-[80%] min-h-screen p-4"}>
+    <div className={"flex flex-col items-center justify-start gap-y-6 mx-auto w-[80%] min-h-full p-4"}>
       <Heading1>{content.title}</Heading1>
       {content.imageUrl ? (
         <Image
@@ -23,7 +23,7 @@ export default function DetailedProduct({content}: DetailedProductProps) {
         <NoImageAvailable/>
       )}
       <p>{content.description}</p>
-      <p>{content.price}</p>
+      <p>{content.price} €</p>
     </div>
   );
 }

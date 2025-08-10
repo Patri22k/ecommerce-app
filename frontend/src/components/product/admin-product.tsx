@@ -18,11 +18,11 @@ export interface AdminProductProps extends React.DetailedHTMLProps<React.HTMLAtt
 export default function AdminProduct({title,price,imageUrl="", moreInfo, onDelete, ...next}: AdminProductProps) {
   return (
     <div className={"relative flex flex-col justify-center items-center text-center text-xs w-full " +
-      "shadow rounded-xl pt-2 gap-y-2 bg-white hover:bg-neutral-100"} {...next}
+      "shadow rounded-xl pt-2 gap-y-2 bg-white"} {...next}
       onClick={() => moreInfo?.()}
     >
       <button
-        className={"absolute flex justify-center items-center top-2 right-2 text-gray-800 hover:text-red-600"}
+        className={"absolute flex justify-center items-center top-2 right-2 text-gray-800"}
         onClick={(e) => {
           e.stopPropagation();
           onDelete?.();

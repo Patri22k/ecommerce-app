@@ -25,7 +25,7 @@ export default function LogOutButton({className="", redirectUrl, label, ...next}
 
   return (
     <button
-      className={"bg-gray-100 border rounded w-full py-2 hover:outline-none" +
+      className={"bg-gray-100 border rounded w-full py-2 " +
         "transition duration-500 " + className}
       onClick={handleLogOut}
       type="button"

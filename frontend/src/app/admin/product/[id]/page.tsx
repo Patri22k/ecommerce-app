@@ -27,15 +27,6 @@ export default function AdminProductPage() {
   }, []);
 
   useEffect(() => {
-    if (token === null) return;
-
-    if (!token) {
-      setFieldErrors({
-        general: "You must be logged in to view this product."
-      });
-      return;
-    }
-
     if (!pageId) {
       setFieldErrors({
         general: "This product does not exist."
@@ -46,7 +37,7 @@ export default function AdminProductPage() {
     const fetchProduct = async () => {
       setLoading(true);
       setFieldErrors({});
-      const response = await fetchProductById(token, pageId);
+      const response = await fetchProductById(pageId);
 
       if (response.status === 403) {
         setFieldErrors({
