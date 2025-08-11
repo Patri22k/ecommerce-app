@@ -7,6 +7,7 @@ export interface ProductProps extends React.DetailedHTMLProps<React.HTMLAttribut
   id?: string;
   title?: string;
   description?: string;
+  slug?: string;
   category?: string[];
   imageUrl?: string;
   price?: number;

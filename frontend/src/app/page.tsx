@@ -39,7 +39,7 @@ export default function HomePage() {
               description={product.description}
               price={product.price}
               imageUrl={product.imageUrl}
-              moreInfo={() => router.push(`/product/${product.id}`)}
+              moreInfo={() => router.push(`/product/${product.slug}-d${product.id}`)}
             />
           ))}
         </div>
