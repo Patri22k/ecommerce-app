@@ -3,7 +3,7 @@
 import {useEffect, useState} from "react";
 import handleGetUser from "@/lib/get-user";
 
-export interface AdminProps {
+export interface ClientProps {
   id: string;
   name: string;
   email: string;
@@ -12,13 +12,13 @@ export interface AdminProps {
 
 interface UseAdminAccessResult {
   initialized: boolean;
-  admin: AdminProps | null;
+  admin: ClientProps | null;
   adminError: string | null;
 }
 
 export default function useAdminAccess(): UseAdminAccessResult {
   const [initialized, setInitialized] = useState<boolean>(false);
-  const [admin, setAdmin] = useState<AdminProps | null>(null);
+  const [admin, setAdmin] = useState<ClientProps | null>(null);
   const [adminError, setAdminError] = useState<string | null>(null);
 
   useEffect(() => {

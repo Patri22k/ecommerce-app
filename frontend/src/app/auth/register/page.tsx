@@ -86,7 +86,7 @@ export default function RegisterPage() {
 
   return (
     <>
-      <Header>
+      <Header className={"flex items-center justify-center"}>
         <SmartHubLogo/>
       </Header>
       <MainBase.Form>
@@ -98,6 +98,8 @@ export default function RegisterPage() {
           <Heading1>Register a new account</Heading1>
           <TextInput
             id={"name-input"}
+            label={"Name"}
+            placeholder={"Jožko Mrkvička"}
             value={name}
             onChange={(e) => setName(e.target.value)}
             error={fieldErrors.name}
