@@ -13,8 +13,8 @@ export default function ClientProfile({client}: ClientProfileProps) {
           <Heading1>You are currently logged in as Admin!</Heading1>
         )}
       </span>
-      <span className={"w-full p-2 border rounded-xl bg-amber-50"}><b className={"mr-2"}>Name:</b> {client.name}</span>
-      <span className={"w-full p-2 border rounded-xl bg-amber-50"}><b className={"mr-2"}>E-mail:</b> {client.email}</span>
+      <span className={"w-full p-2 border rounded-xl bg-zinc-50"}><b className={"mr-2"}>Name:</b> {client.name}</span>
+      <span className={"w-full p-2 border rounded-xl bg-zinc-50"}><b className={"mr-2"}>E-mail:</b> {client.email}</span>
     </>
   );
 }

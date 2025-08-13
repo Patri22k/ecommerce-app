@@ -12,6 +12,7 @@ import {useEffect, useState} from "react";
 import {ClientProps} from "@/hooks/use-admin-access";
 import getUser from "@/lib/get-user";
 import ClientProfile from "@/components/client/client-profile";
+import {AxiosError} from "axios";
 
 export default function ProfilePage() {
   const loggedIn = useIsLoggedIn();
@@ -31,7 +32,22 @@ export default function ProfilePage() {
     };
 
     fetchUserData().catch((err) => {
-      setError(err);
+      if (err instanceof AxiosError) {
+        if (err.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          setError(err.response.data.message || "An error occurred while fetching products.");
+        } else if (err.request) {
+          // The request was made but no response was received
+          setError("No response received from the server.");
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          setError(err.message);
+        }
+      } else {
+        // Handle non-Axios errors
+        setError("An unexpected error occurred while fetching products.");
+      }
     });
   }, [loggedIn]);
 
@@ -43,10 +59,9 @@ export default function ProfilePage() {
       <MainBase>
         {loggedIn ? (
             <div className={"flex flex-col items-center justify-center w-full gap-y-2"}>
-              {/* TODO: Implement profile info like name, email, etc. */}
               {error ? (
                 <span className={"text-red-500"}>
-                  Error fetching user data: {error}
+                  Error fetching user data.
                 </span>
               ) : user ? (
                 <ClientProfile client={user}/>

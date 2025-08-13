@@ -12,22 +12,59 @@ import useFetchMultipleProducts from "@/hooks/use-fetch-multiple-products";
 import LoadPage from "@/components/common/load-page";
 import GlobalError from "@/components/common/error/global-error";
 import {useRouter} from "next/navigation";
+import React, {useState} from "react";
+import TextInput from "@/components/common/input/text-input";
 
 export default function HomePage() {
   const {loading, products, error} = useFetchMultipleProducts();
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const router = useRouter();
+
+  const handleSearchProduct = () => {
+    // TODO: Implement search functionality
+    console.log("Searching for product:", searchQuery);
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSearchProduct();
+    } else if (event.key === "Escape") {
+      setIsSearching(false);
+      setSearchQuery("");
+    }
+  }
 
   if (loading) return <LoadPage/>;
   if (error) return <GlobalError name={"Error fetching product"} message={error} />;
 
   return (
-    <>
-      <Header>
-        <SmartHubLogo/>
-        <Search className="mx-3 mt-2 mr-4" />
+    <div className={"w-full"} onClick={() => setIsSearching(false)}>
+      <Header onClick={(e) => e.stopPropagation()}>
+        {isSearching ? (
+          <div className={"flex items-center justify-center w-[90%] mx-auto"}>
+            <TextInput
+              id={"search-product"}
+              label={""}
+              placeholder={"Samsung Galaxy S23 Ultra"}
+              className={"w-full"}
+              value={searchQuery}
+              onKeyDown={handleKeyDown}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            >
+              <Search className="absolute right-2 top-1/3 -translate-y-1/2 cursor-pointer" onClick={handleSearchProduct} />
+            </TextInput>
+          </div>
+        ) : (
+          <>
+            <SmartHubLogo/>
+            <Search className="mx-3 mt-2 mr-4" onClick={() => setIsSearching(!isSearching)} />
+          </>
+        )}
       </Header>
-      <MainBase>
+      <MainBase onClick={() => setIsSearching(false)}>
         <Heading2>The best products for you</Heading2>
         <div className="grid grid-cols-2 gap-3">
           {products && products.length > 0
@@ -44,9 +81,9 @@ export default function HomePage() {
           ))}
         </div>
       </MainBase>
-      <Footer>
+      <Footer onClick={() => setIsSearching(false)}>
         <Navbar/>
       </Footer>
-    </>
+    </div>
   );
 }

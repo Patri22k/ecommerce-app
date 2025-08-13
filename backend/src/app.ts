@@ -8,6 +8,7 @@ import {userRouter} from "./routers/userRouter";
 import prismaErrorHandler from "./errors/prismaErrorHandler";
 import {patchExpressMethods} from "./utils/expressErrorWrapper";
 import {forwardingErrorHandler} from "./errors/forwardingErrorHandler";
+import {cartRouter} from "./routers/cartRouter";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(cors({
 app.use('/api/auth', authRouter);
 app.use('/api/product', productRouter);
 app.use('/api/me', userRouter);
+app.use('/api/cart', cartRouter);
 
 app.use(zodErrorHandler); // Zod error handler
 app.use(prismaErrorHandler); // Prisma error handler
@@ -35,7 +37,7 @@ app.use((req, _, next) => {
   next({
     status: 404,
     message: `Cannot ${req.method} ${req.originalUrl}`,
-  })
+  });
 });
 
 app.use(globalErrorHandler); // Global error handler

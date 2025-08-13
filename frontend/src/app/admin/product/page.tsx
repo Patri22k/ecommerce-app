@@ -154,7 +154,7 @@ export default function CreateProductPage() {
           <ArrayInput
             id={"categories-input"}
             value={categories}
-            customOnChange={setCategories}
+            onChangeAction={setCategories}
             error={fieldErrors.categories}
             label={"Categories"}
             placeholder={"Smartphones, Electronics, Gadgets"}
