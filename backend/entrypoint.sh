@@ -19,4 +19,4 @@ echo "Running seed script..."
 npx prisma db seed
 
 echo "Starting app..."
-npm start
+npm run dev

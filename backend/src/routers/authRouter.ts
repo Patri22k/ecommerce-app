@@ -14,8 +14,12 @@ router.post('/register', async (req, res) => {
     data: {
       name,
       email,
-      password: await hashPassword(password)
-    }
+      password: await hashPassword(password),
+      Cart: {
+        create: {},
+      },
+    },
+    include: { Cart: true}
   });
 
   const token = generateJwtToken(user.id);

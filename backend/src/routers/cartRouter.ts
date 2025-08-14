@@ -1,8 +1,11 @@
 import {PrismaClient} from "@prisma/client";
 import {Router} from "express";
+import {authUserToken} from "../middleware/authUserToken";
 
 const router = Router();
 const prisma = new PrismaClient();
+
+router.use(authUserToken);
 
 router.post("/:cartId/item", (req, res) => {
   const {cartId} = req.params;
