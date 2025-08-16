@@ -12,6 +12,10 @@ echo "Postgres is up - continuing..."
 echo "Generating Prisma client..."
 npx prisma generate
 
+# Restart db (everything will be lost), when schema.prisma is changed
+# echo "Resetting database..."
+# npx prisma migrate reset --force
+
 echo "Running prisma migrations..."
 npx prisma migrate dev --name init --skip-seed
 

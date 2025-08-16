@@ -19,7 +19,7 @@ router.post('/register', async (req, res) => {
         create: {},
       },
     },
-    include: { Cart: true}
+    include: { Cart: true }
   });
 
   const token = generateJwtToken(user.id);
@@ -31,7 +31,8 @@ router.post('/register', async (req, res) => {
       id: user.id,
       name: user.name,
       email: user.email,
-      role: user.role
+      role: user.role,
+      cart: user.Cart,
     },
     message: "Login successful"
   });

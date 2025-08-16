@@ -1,6 +1,8 @@
 import {Router} from 'express';
 import {PrismaClient} from '@prisma/client';
 import jwt from "jsonwebtoken";
+import {authorizeRole} from "../middleware/authorizeRole";
+import {authUserToken} from "../middleware/authUserToken";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -42,6 +44,16 @@ router.get('/', async (req, res) => {
     status: "success",
     data: user,
   });
+})
+
+router.delete("/:id", authUserToken, authorizeRole("ADMIN"), async (req, res) => {
+  const {id} = req.params;
+
+  await prisma.user.delete({
+    where: {id}
+  });
+
+  return res.status(204).json({status: "success", message: "User deleted successfully"});
 })
 
 export const userRouter = router;
