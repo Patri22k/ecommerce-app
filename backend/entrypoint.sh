@@ -1,23 +1,17 @@
 #!/usr/bin/env sh
 
 echo "Waiting for Postgres to be ready..."
-
 while ! nc -z postgres 5432; do
   echo "Postgres is unavailable - sleeping"
   sleep 1
 done
-
 echo "Postgres is up - continuing..."
+
+echo "Applying migrations..."
+npx prisma migrate dev --name init
 
 echo "Generating Prisma client..."
 npx prisma generate
-
-# Restart db (everything will be lost), when schema.prisma is changed
-# echo "Resetting database..."
-# npx prisma migrate reset --force
-
-echo "Running prisma migrations..."
-npx prisma migrate dev --name init --skip-seed
 
 echo "Running seed script..."
 npx prisma db seed

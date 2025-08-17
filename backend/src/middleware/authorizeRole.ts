@@ -1,9 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 
+enum Role {
+  USER = "USER",
+  ADMIN = "ADMIN",
+}
+
 interface AuthenticatedRequest extends Request {
   user?: {
     id: string;
-    role: string;
+    role: Role;
   }
 }
 
