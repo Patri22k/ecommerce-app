@@ -67,5 +67,5 @@ model CartItem {
   productId String
   quantity  Int     @default(1)
 
-  @@unique([cartId, productId])
+  @@unique([cartId, productId], name: "cartId_productId")
 }

@@ -13,14 +13,9 @@ router.post("/:cartId/item", async (req, res) => {
   const {cartId} = req.params;
   const {productId, quantity} = req.body;
 
-
   const cartItem = await prisma.cartItem.upsert({
     where: {
-      // @ts-ignore
-      // This works logically – Prisma can find the item by the combination of cartId and productId
-      // and the upsert executes correctly at runtime. However, WebStorm / TypeScript
-      // will throw a type error because CartItemWhereUniqueInput does not contain this property.
-      cart_product: { cartId, productId },
+      cartId_productId: { cartId, productId },
     },
     update: {
       quantity: {
