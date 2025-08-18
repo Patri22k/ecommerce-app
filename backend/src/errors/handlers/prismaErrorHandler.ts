@@ -2,20 +2,9 @@ import {
   PrismaClientInitializationError, PrismaClientKnownRequestError, PrismaClientRustPanicError, PrismaClientUnknownRequestError,
   PrismaClientValidationError} from "@prisma/client/runtime/library";
 import {ErrorRequestHandler} from "express";
-
-class HttpError extends Error {
-  status: number;
-
-  constructor(status: number, message: string) {
-    super(message);
-    this.status = status;
-  }
-}
+import {HttpError} from "../types/HttpError";
 
 const prismaErrorHandler: ErrorRequestHandler = (error, _, __, next) => {
-  // TODO: Debug logger for developers. For production purposes, delete this line.
-  console.log("Prisma Error Handler:", error);
-
   if (error instanceof PrismaClientKnownRequestError) {
     switch (error.code) {
       case "P1000":

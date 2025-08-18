@@ -7,7 +7,7 @@ const handlerMethodNames = ["get", "post", "put", "delete", "patch"];
  *
  * @param router The Express router instance to patch.
  */
-export const patchExpressMethods = (router: any) => {
+const patchExpressMethods = (router: any) => {
   handlerMethodNames.forEach(method => {
     const originalRequestHandlerFunc = router[method];
 
@@ -22,3 +22,5 @@ const patchExpressHandler = (handler: any): RequestHandler => {
     Promise.resolve(handler(req, res, next)).catch((reason) => next(reason));
   };
 };
+
+export default patchExpressMethods;

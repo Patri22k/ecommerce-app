@@ -42,14 +42,13 @@ services:
       - CHOKIDAR_USEPOLLING=true
     command: npm run dev
 
-  # TODO: Remove later
-  # payment-service:
-    # build: ./services/payment-service
-    # container_name: payment-service
-    # ports:
-      # - "8080:8080"
-    # depends_on:
-      # - backend
+  payment-service:
+    build: ./services/payment-service
+    container_name: payment-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:

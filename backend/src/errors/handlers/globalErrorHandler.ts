@@ -5,6 +5,9 @@ const globalErrorHandler: ErrorRequestHandler = (
   _,
   res,
   __) => {
+  // TODO: Debug logger for developers. For production purposes, delete this line.
+  console.log("Error Handler:", error);
+
   const status = error.status || 500;
   const message = error.message || "Internal Server Error";
 
