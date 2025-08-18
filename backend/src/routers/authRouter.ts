@@ -41,10 +41,13 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   const {email, password} = loginUserValidator.parse(req.body);
 
-  const user = await prisma.user.findUniqueOrThrow(
-    {
-      where: {email}
-    });
+  const user = await prisma.user.findUnique({
+    where: {email}
+  });
+
+  if (!user) {
+    return res.status(401).json({status: "fail", message: "Invalid email or password"});
+  }
 
   // Compare the provided password with the stored hashed password
   const isPasswordValid = await bcrypt.compare(password, user.password);

@@ -32,4 +32,54 @@ router.post("/:cartId/item", async (req, res) => {
   return res.status(201).json({status: "success", data: cartItem});
 })
 
+router.delete("/:cartId/item/:productId", async (req, res) => {
+  const { cartId, productId } = req.params;
+
+  await prisma.cartItem.delete({
+    where: {
+      cartId_productId: { cartId, productId },
+    },
+  });
+
+  return res.status(204).end();
+})
+
+router.patch("/:cartId/item/:productId", async (req, res) => {
+  const { cartId, productId } = req.params;
+  const { quantity } = req.body;
+
+  const existingItem = await prisma.cartItem.findUnique({
+    where: {
+      cartId_productId: { cartId, productId },
+    },
+  });
+
+  if (!existingItem) {
+    return res.status(404).json({status: "fail", message: "Cart item not found. No deletion performed."});
+  }
+
+  const newQuantity = existingItem.quantity - Number(quantity);
+
+  if (newQuantity <= 0) {
+    await prisma.cartItem.delete({
+      where: {
+        cartId_productId: { cartId, productId },
+      },
+    });
+
+    return res.status(204).end();
+  }
+
+  const updatedItem = await prisma.cartItem.update({
+    where: {
+      cartId_productId: { cartId, productId },
+    },
+    data: {
+      quantity: newQuantity,
+    },
+  });
+
+  return res.status(200).json({status: "success", data: updatedItem});
+})
+
 export const cartRouter = router;

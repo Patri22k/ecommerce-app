@@ -11,7 +11,7 @@ echo "Applying migrations..."
 npx prisma migrate dev --name init
 
 echo "Generating Prisma client..."
-npx prisma generate
+npx prisma generate --no-hints
 
 echo "Running seed script..."
 npx prisma db seed

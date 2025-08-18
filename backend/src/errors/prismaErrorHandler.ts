@@ -1,4 +1,6 @@
-import {Prisma} from "@prisma/client";
+import {
+  PrismaClientInitializationError, PrismaClientKnownRequestError, PrismaClientRustPanicError, PrismaClientUnknownRequestError,
+  PrismaClientValidationError} from "@prisma/client/runtime/library";
 import {ErrorRequestHandler} from "express";
 
 class HttpError extends Error {
@@ -11,43 +13,42 @@ class HttpError extends Error {
 }
 
 const prismaErrorHandler: ErrorRequestHandler = (error, _, __, next) => {
-  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+  // TODO: Debug logger for developers. For production purposes, delete this line.
+  console.log("Prisma Error Handler:", error);
+
+  if (error instanceof PrismaClientKnownRequestError) {
     switch (error.code) {
       case "P1000":
-        return next(new HttpError(401,  "Authentication failed, invalid credentials."));
       case "P1001":
-        return next(new HttpError(503, "Database connection error, service unavailable."));
       case "P1002":
-        return next(new HttpError(500, "Database connection timed out."));
+        return next(new HttpError(503, "The database service is currently unavailable. Please try again later."));
       case "P2002":
-        return next(new HttpError(409, "Duplicate entry, unique constraint violated."));
+        return next(new HttpError(409, "This value already exists. Please use a different one."));
       case "P2003":
-        return next(new HttpError(400, "Foreign key constraint failed."));
       case "P2004":
-        return next(new HttpError(400, "Invalid value for a field."));
       case "P2007":
-        return next(new HttpError(400, "Invalid input, data type mismatch."));
+        return next(new HttpError(400, "The provided data is invalid."));
       case "P2025":
-        return next(new HttpError(404, "Invalid email or password."));
+        return next(new HttpError(404, "The requested record could not be found."));
       default:
-        return next(new HttpError(500, "An unknown database error occurred."));
+        return next(new HttpError(500, "An unexpected error occurred. Please try again."));
     }
   }
 
-  if (error instanceof Prisma.PrismaClientUnknownRequestError) {
-    return next(new HttpError(500, "An unknown request error occurred in Prisma."));
+  if (error instanceof PrismaClientUnknownRequestError) {
+    return next(new HttpError(500, "An unexpected error occurred. Please try again."));
   }
 
-  if (error instanceof Prisma.PrismaClientRustPanicError) {
-    return next(new HttpError(500, "Prisma internal panic occurred. Please restart the server."));
+  if (error instanceof PrismaClientRustPanicError) {
+    return next(new HttpError(500, "An internal server error occurred. Please try again later."));
   }
 
-  if (error instanceof Prisma.PrismaClientInitializationError) {
-    return next(new HttpError(500, "Failed to initialize Prisma Client. Check your environment."));
+  if (error instanceof PrismaClientInitializationError) {
+    return next(new HttpError(500, "The server failed to initialize. Please try again later."));
   }
 
-  if (error instanceof Prisma.PrismaClientValidationError) {
-    return next(new HttpError(400, "Validation error. Input does not match schema."));
+  if (error instanceof PrismaClientValidationError) {
+    return next(new HttpError(400, "The provided input is not valid."));
   }
 
   // Unknown or other error
