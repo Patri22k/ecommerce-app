@@ -20,7 +20,7 @@ const axiosErrorHandler: ErrorRequestHandler = (
   if (isAxiosError(error)) {
     const status = error.response?.status || 500;
     const message = statusMessages[status] || "An unexpected error occurred.";
-    return new HttpError(status, message);
+    return next(new HttpError(status, message));
   }
 
   // Unknown or other error

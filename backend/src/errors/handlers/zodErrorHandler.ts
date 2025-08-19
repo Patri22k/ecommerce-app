@@ -1,4 +1,5 @@
 import {ErrorRequestHandler} from "express";
+import {ZodError} from "zod";
 
 const zodErrorHandler: ErrorRequestHandler = (
   error,
@@ -16,8 +17,6 @@ const zodErrorHandler: ErrorRequestHandler = (
   // Unknown or other error
   next(error);
 }
-
-import {ZodError} from "zod";
 
 function isZodError(error: unknown): error is ZodError {
   return error instanceof ZodError;
