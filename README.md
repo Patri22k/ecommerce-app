@@ -11,10 +11,17 @@ with the following content:
 # Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
 # See the documentation for all the connection string options: https://pris.ly/d/connection-strings
 
-DATABASE_URL="postgresql://user:password@postgres:5432/ecommerce-app"
-JWT_TOKEN="your-jwt-secret"
+DATABASE_URL=postgresql://user:password@postgres:5432/main-db
+JWT_TOKEN=your-jwt-secret
 
 # The following env variables are used for Prisma seeding.
-INITIAL_ADMIN_EMAIL="your@email.sk"
-INITIAL_ADMIN_PASSWORD="your-password"
+INITIAL_ADMIN_EMAIL=your@email.sk
+INITIAL_ADMIN_PASSWORD=your-password
+```
+
+And `.env` file to `services/payment-service/` directory with the following content:
+```dotenv
+SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-payment:5432/payment-db
+SPRING_DATASOURCE_USERNAME=your-username
+SPRING_DATASOURCE_PASSWORD=your-password
 ```

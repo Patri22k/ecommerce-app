@@ -2,23 +2,33 @@ services:
 
   postgres:
     image: postgres:latest
-    container_name: postgres
+    container_name: main-db
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: postgres
+      POSTGRES_DB: main-db
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  postgres-payment:
+    image: postgres:latest
+    container_name: payment-db
+    environment:
+      POSTGRES_USER: pay-user
+      POSTGRES_PASSWORD: pay-password
+      POSTGRES_DB: payment-db
+    volumes:
+      - postgres-payment-data:/var/lib/postgresql/data
+    ports:
+        - "5433:5432" # host port 5433 → container port 5432
 
   backend:
     build: ./backend
     container_name: backend
     env_file:
       - ./backend/.env
-    environment:
-      DATABASE_URL: postgres://user:password@postgres:5432/postgres
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -45,10 +55,15 @@ services:
   payment-service:
     build: ./services/payment-service
     container_name: payment-service
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-payment:5432/payment-db
+      - SPRING_DATASOURCE_USERNAME=pay-user
+      - SPRING_DATASOURCE_PASSWORD=pay-password
     ports:
       - "8080:8080"
     depends_on:
-      - backend
+      - postgres-payment
 
 volumes:
-  postgres_data:
+  postgres-data:
+  postgres-payment-data:
