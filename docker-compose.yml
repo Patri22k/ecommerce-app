@@ -52,17 +52,18 @@ services:
       - CHOKIDAR_USEPOLLING=true
     command: npm run dev
 
-  payment-service:
-    build: ./services/payment-service
-    container_name: payment-service
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-payment:5432/payment-db
-      - SPRING_DATASOURCE_USERNAME=pay-user
-      - SPRING_DATASOURCE_PASSWORD=pay-password
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres-payment
+  # TODO: Uncomment when payment service is developed (currently using localhost for HMR)
+  #payment-service:
+  #  build: ./services/payment-service
+  #  container_name: payment-service
+  #  environment:
+  #    - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-payment:5432/payment-db
+  #    - SPRING_DATASOURCE_USERNAME=pay-user
+  #    - SPRING_DATASOURCE_PASSWORD=pay-password
+  #  ports:
+  #    - "8080:8080"
+  #  depends_on:
+  #    - postgres-payment
 
 volumes:
   postgres-data:
